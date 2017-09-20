@@ -20,3 +20,6 @@ Creamos primero una nueva máquina virtual en el VirtualBox. Es necesario crear 
 
 
 ### 1.1.1 Instalación Xubuntu 16.04.1
+Ejecutamos la iso de Xubuntu en el VirtualBox. Instalamos el Xubuntu y configuramos todos por defecto.
+
+![imagen](img/001.png)
