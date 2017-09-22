@@ -55,25 +55,25 @@ Confirmación de los usuarios creados
 ### 1.1.4 Instalación el servicio LTSP
 
 Primero tenemos que instalar el servicio ssh, para permitir acceso remoto a la máquina.
-* apt-get install ssh
+> * apt-get install ssh
 
 Modificamos el fichero /etc/ssh/sshd_config y permitimos
-* PermitRootLogin Yes
+> * PermitRootLogin Yes
 
 ![imagen](img/010.png)
 
 Comenzamos con la instalacion del LTSP
-* apt-get install ltsp-server-standalone
+> * apt-get install ltsp-server-standalone
 
 Termina de instalarse el ltsp. Procesamos en crear una imagen del SO.
 
-*   ltsp-build-client
+> *  ltsp-build-client
 
 ![imagen](img/009.png)
 
 Ejecutamos el siguiente comando para verificar la información
 
-* ltsp-info
+> * ltsp-info
 
 ![imagen](img/011.png)
 
