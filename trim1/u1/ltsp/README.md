@@ -140,7 +140,7 @@ Comprobamos que el servicio esta corriendo.
 
 
 
-## Preparar MV Cliente <a name="id7"></>
+## Preparar MV Cliente <a name="id7"></a>
 
 Creamos una máquina virtual en VirtualBox:
 
@@ -152,12 +152,13 @@ Creamos una máquina virtual en VirtualBox:
 
 Se comprueba que inicia en el equipo cliente el sistema operativo del servidor ltsp.
 
+
+![imagen](img/019.png)
+
 > Nota:
-> > Al iniciar el Equipo cliente desde ltsp mediante pxe(por red), ocurre el siguiente error, se muestra mal la pantalla de inicio del sistema operativo.
+> > En las máquinas virtuales tiene que habilitar la siguiente configuración:
 
-![imagen](img/017.png)
-
-Realizamos el mismo procedimiento con Ubuntu para comprobar si es por culpa de xubuntu.
+![imagen](img/020.png)
 
 Comprobación de los siguientes comando para ver información de los usuarios, el sistema y las conexiones.
 
@@ -166,6 +167,10 @@ Comprobación de los siguientes comando para ver información de los usuarios, e
     * arp           # Muestra la tabla ARP (Asociaciones de IP con MAC)
     * netstat -ntap # Muestras las conexiones con el exterior
 
+![imagen](img/018.png)
+
+## Video del proceso de funcionamiento del Servidor ltsp con el cliente.<a name="id8"></a>
 
 
-## Video del proceso de funcionamiento del Servidor ltsp con el cliente.<a name="id8"></>
+
+[![Video de Xubuntu-LTSP](img/021.png)](https://www.youtube.com/watch?v=WlBchDqvVLQ)
