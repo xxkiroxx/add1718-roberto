@@ -157,7 +157,7 @@ Se comprueba que inicia en el equipo cliente el sistema operativo del servidor l
 
 ![imagen](img/017.png)
 
-
+Realizamos el mismo procedimiento con Ubuntu para comprobar si es por culpa de xubuntu.
 
 Comprobación de los siguientes comando para ver información de los usuarios, el sistema y las conexiones.
 
@@ -166,5 +166,6 @@ Comprobación de los siguientes comando para ver información de los usuarios, e
     * arp           # Muestra la tabla ARP (Asociaciones de IP con MAC)
     * netstat -ntap # Muestras las conexiones con el exterior
 
+hola soy nuevo
 
 ## Video del proceso de funcionamiento del Servidor ltsp con el cliente.<a name="id8"></>
