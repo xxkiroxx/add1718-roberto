@@ -166,6 +166,6 @@ Comprobación de los siguientes comando para ver información de los usuarios, e
     * arp           # Muestra la tabla ARP (Asociaciones de IP con MAC)
     * netstat -ntap # Muestras las conexiones con el exterior
 
-hola soy nuevo
+
 
 ## Video del proceso de funcionamiento del Servidor ltsp con el cliente.<a name="id8"></>
