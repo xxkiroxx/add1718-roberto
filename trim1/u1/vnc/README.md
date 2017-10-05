@@ -108,3 +108,14 @@ En OpenSuse escribimos en la línea de comando vncviewer, nos pedirá la direcci
 Escribimos en la línea de comando el siguiente comando.
 
 ![imagen](img/018.jpg)
+
+
+## DISPLAY 0 en GNU/Linux<a name="id10"></a>
+
+[Enlace de interés](https://wiki.archlinux.org/index.php/TigerVNC_)
+
+Cuando queremos ejecutar vncserver para controlar directamente la pantalla local usaremos x0vncserver de tigervnc.
+
+    x0vncserver -display :0 -passwordfile ~/.vnc/passwd
+
+Para más información, véase man x0vncserver
