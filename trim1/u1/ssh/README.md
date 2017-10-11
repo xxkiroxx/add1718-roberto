@@ -64,11 +64,11 @@ Fijate en la siguiente imagen.
 
 - ping 8.8.4.4 -i 2  #Comprobar conectividad externa
 
-
+![image](img/014.png)
 
 - host www.google.es #Comprobar el servidor DNS
 
-
+![image](img/015.png)
 
 - ping ssh-clientXXa #Comprobar conectividad con cliente A
 
@@ -106,7 +106,17 @@ Comprobación de los usuarios creados.
 Tenemos que configurar una dirección IP estática
 
 
+### Nombre del Equipo y fichero hosts
 
+Escribimos en el fichero `hosts y hostname`, el nombre del Equipo.
+
+En el fichero `hosts` también escribimos las siguientes IP, para crear un DNS simple.
+
+![image](img/015.png)
+
+### Realizar ping a ssh-server22 y ssh-client22b
+
+![image](img/017.png)
 
 ## Cliente Windows 7
 
@@ -123,3 +133,70 @@ Tenemos que configurar una dirección IP estática
 La ruta es `c:\windows\system32\drivers\etc\hosts`
 
 ![image](img/011.png)
+
+### Realizar ping a ssh-server22 y ssh-client22a
+
+![image](img/017.png)
+
+
+## Instalación de Servicio openssh
+
+Primero tenemos que comprobar si tenemos instalado el servicio.
+
+![image](img/020.png)
+
+Para instalar el servicio solo tenemos que escribir `sudo zypper install openssh`
+
+
+![image](img/021.png)
+
+### Comprobación del Servicio ssh
+
+Tenemos que escribir el siguiente comando para ver su status `sudo systemctl status sshd`
+
+![image](img/022.png)
+
+También podemos comprobar el servicio con el siguiente comando. `sudo ps -ef | grep sshd`
+
+
+![image](img/023.png)
+
+Para habilitar en el inicio del sistema escribimos el siguiente comando.
+
+`sudo systemctl enable sshd`
+
+![image](img/025.png)
+
+Para saber que el servidor esta escuchando el puerto 22 de ssh.
+
+![image](img/024.png)
+
+## Primera conexión SSH desde ssh-client22a
+
+Primero realizamos una comprobación con le ping para ver si se comunican.
+
+![image](img/026.png)
+
+### Comprobación del Puerto SSH abierto en el ssh-server22
+
+Primero necesitamos instalar el nmap.`sudo zypper in nmap`
+
+Escribimos el siguiente comando para ver los puerto de ssh habilitados al ssh-server22.
+
+![image](img/027.png)
+
+### Conexión desde ssh-client22a al ssh-server22
+
+Para la conexión solo tenemos que escribir el siguiente comando para conectarnos al ssh-server22
+
+![image](img/028.png)
+
+Una vez dentro del ssh-server22.
+
+![image](img/029.png)
+
+Salimos fuera de la conexión.
+
+### Fichero de la clave de identificador ssh sha2
+
+![image](img/030.png)
