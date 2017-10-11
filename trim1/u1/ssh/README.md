@@ -138,6 +138,12 @@ La ruta es `c:\windows\system32\drivers\etc\hosts`
 
 ![image](img/017.png)
 
+### Instalación de herramienta putty para la conexion ssh
+
+Solo tenemos que ir a la página Web putty y descargar su aplicación.
+
+
+![image](img/031.png)
 
 ## Instalación de Servicio openssh
 
@@ -200,3 +206,164 @@ Salimos fuera de la conexión.
 ### Fichero de la clave de identificador ssh sha2
 
 ![image](img/030.png)
+
+## Primera conexión ssh-client22b al ssh-server22
+
+Tenemos que abrir la aplicación de PuTTy.
+
+![image](img/031.png)
+
+Para conectarnos solo tenemos que escribir el nombre del servidor o la dirección IP.
+
+![image](img/032.png)
+
+Solo tenemos que escribir el usuario de conexión del servidor y la contraseña.
+
+![image](img/034.png)
+
+![image](img/035.png)
+
+### Comprobación de la clave de conexión
+
+![image](img/033.png)
+
+
+## Cambiar las claves del servidor.
+
+Primero tenemos que ver en qué ruta están las claves. `ls -l /etc/ssh/`
+
+![image](img/036.png)
+
+Tenemos que modificar el fichero `sshd_config`.
+
+Primero realizo una copia de seguridad del fichero de configuración.
+
+![image](img/037.png)
+
+Abrimos con nano el fichero de configuración `sshd_config` y solo tenemos que quitar la línea que esta comentada.
+
+![image](img/038.png)
+
+### Regenerar Claves RSA nuevas en SSH
+
+Solo tenemos que escribir el siguiente comando. `sudo ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key`
+
+Cuando pide una contraseña, en esté caso no escribimos ninguna contraseña.
+
+Esto genera una claves rsa nuevas, Privadas y Públicas.
+
+![image](img/039.png)
+
+Solo nos faltas reiniciar el servicio de sshd
+
+![image](img/040.png)
+
+### Comprobación en los Equipos ssh-client22a y ssh-client22b las claves RSA
+
+- ssh-client22a
+
+Cuando iniciamos un ssh al ssh-server22, nos sale el siguiente mensaje.
+
+![image](img/041.png)
+
+Tenemos que borrar desde la máquina cliente ssh-client22a el fichero `known_hosts`.
+
+![image](img/042.png)
+
+Cuando volvemos a conectarnos mediante ssh al ssh-server22, nos sale la nuevas claves RSA.
+
+![image](img/043.png)
+
+
+- ssh-client22b
+
+Abrimos la aplicación de PuTTy y escribimos de nuevo en el host el nombre del servidor ssh-server22.
+
+![image](img/044.png)
+
+Se comprueba que al iniciar ssh nos dice la nuevas claves RSA.
+
+Inicia correctamente el ssh
+
+![image](img/045.png)
+
+## Personalización del prompt del BASH
+
+Tenemos que ir a la máquina ssh-server22 y buscar el siguiente fichero del usuario hernandez1 `.bashrc`.
+
+![image](img/047.png)
+
+![image](img/046.png)
+
+Solo tenemos que escribir los siguientes parámetros para cambiar el color al prompt del usuario `hernandez1`.
+
+Nos conectamos desde un equipo ssh-client22a y ssh-client22b al ssh-server.
+
+![image](img/049.png)
+
+![image](img/050.png)
+
+### Creación de alias.
+
+Tenemos que estar en la ruta home del usuario hernandez1 y creamos un fichero oculto llamado `.alias`.
+
+![image](img/048.png)
+
+## Autenticación mediante claves públicas
+
+El objetivo de la práctia es lograr con el usuario hernandez4 acceder desde ssh sin contraseña, mediante las claves públicas y privadas.
+
+En el client22a vamos a generar una par de claves.
+
+![image](img/051.png)
+
+Como se comprueba en la siguiente imagen.
+
+![image](img/052.png)
+
+El siguiente proceso es subir la clave pública al servidor ssh-server22, solo tenemos que escribir el siguiente comando, primero ' `ssh-copy-id "usuariodelserver"@"nombreservidor o IP"`
+
+![image](img/053.png)
+
+Comprobación que el usuario hernandez4 tiene la clave pública
+
+
+![image](img/054.png)
+
+Comprobar que ahora al acceder remotamente vía SSH
+- Desde ssh-client22a, NO se pide password.
+
+![image](img/055.png)
+
+- Desde ssh-client22b, SI se pide el password.
+
+![image](img/056.png)
+
+
+## 6. Uso de SSH como túnel para X
+
+Comprobamos que en el equipo ssh-client22a no tiene instalado el geany.
+
+![image](img/057.png)
+
+### Instalación geany en el ssh-server22
+
+![image](img/058.png)
+
+### Configuración del fichero sshd_config
+
+solo tenemos que estar en el servidor ssh-server22 y modificar el fichero `sshd_config`
+
+![image](img/059.png)
+
+Tenemos que tener descomentada la línea `X11Forwarding yes`
+
+### Ejecutar aplicación desde ssh-server22 en ssh-client22a
+
+Solo tenemos que escribir el siguiente comando, ssh -X hernandez1@ssh-server22
+
+![image](img/060.png)
+
+Escribimos el comando geany y se ejecuta.
+
+### Ejecutamos la aplicación desde ssh-server22 en ssh-client22b
