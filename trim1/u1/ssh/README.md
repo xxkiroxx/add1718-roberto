@@ -20,13 +20,64 @@
 
     - [Realizar ping a ssh-server22 y ssh-client22b](#id10)
 
-- [](#id11)
+- [Cliente Windows 7](#id11)
 
-- [](#id12)
+    - [Configuración de la dirección IP estática](#id12)
 
-- [](#id13)
+    - [Configuración de Nombre Equipos](#id13)
 
-# Preparativos
+    - [Configuración fichero hosts](#id14)
+
+    - [Realizar ping a ssh-server22 y ssh-client22a](#id15)
+
+    - [Instalación de herramienta putty para la conexion ssh](#id16)
+
+- [Instalación de Servicio openssh](#id17)
+
+    - [Comprobación del Servicio ssh](#id18)
+
+- [Primera conexión SSH desde ssh-client22a](#id19)
+
+    - [Comprobación del Puerto SSH abierto en el ssh-server22](#id20)
+
+    - [Conexión desde ssh-client22a al ssh-server22](#id21)
+
+    - [Fichero de la clave de identificador ssh sha2](#id22)
+
+- [Primera conexión ssh-client22b al ssh-server22](#id23)
+
+    - [Comprobación de la clave de conexión](#id24)
+
+- [Cambiar las claves del servidor](#id25)
+
+- [Regenerar Claves RSA nuevas en SSH](#id26)
+
+- [Comprobación en los Equipos ssh-client22a y ssh-client22b las claves RSA](#id27)
+
+- [Personalización del prompt del BASH](#id28)
+
+    - [Creación de alias](#id29)
+
+- [Autenticación mediante claves públicas](#id30)
+
+- [Uso de SSH como túnel para X](#id31)
+
+    - [Instalación geany en el ssh-server22](#id32)
+
+    - [Configuración del fichero sshd_config](#id33)
+
+    - [Ejecutar aplicación desde ssh-server22 en ssh-client22a](#id34)
+
+- [Aplicaciones Windows nativas](#id35)
+
+- [Restricciones de uso para el Usuario hernandez2](#id36)
+
+- [Restricción sobre una aplicación](#id37)
+
+
+![image](img/000.png)
+
+
 
 
 ## Servidor SSH<a name="id1"></a>
@@ -85,13 +136,13 @@ Fijate en la siguiente imagen.
 
 ![image](img/015.png)
 
-- ping ssh-clientXXa #Comprobar conectividad con cliente A
+- ping ssh-client22a #Comprobar conectividad con cliente A
 
 ![image](img/006.png)
 
-- ping ssh-clientXXb #Comprobar conectividad con cliente B
+- ping ssh-client22b #Comprobar conectividad con cliente B
 
-![image](img/0010.png)
+![image](img/010.png)
 
 - lsblk              #Consultar particiones
 
@@ -114,14 +165,14 @@ Comprobación de los usuarios creados.
 
 ![image](img/009.png)
 
-## Cliente OpenSuSe
+## Cliente OpenSuSe<a name="id7"></a>
 
-### Configuración de la dirección IP estática
+### Configuración de la dirección IP estática<a name="id8"></a>
 
 Tenemos que configurar una dirección IP estática
 
 
-### Nombre del Equipo y fichero hosts
+### Nombre del Equipo y fichero hosts<a name="id9"></a>
 
 Escribimos en el fichero `hosts y hostname`, el nombre del Equipo.
 
@@ -129,38 +180,38 @@ En el fichero `hosts` también escribimos las siguientes IP, para crear un DNS s
 
 ![image](img/015.png)
 
-### Realizar ping a ssh-server22 y ssh-client22b
+### Realizar ping a ssh-server22 y ssh-client22b<a name="id10"></a>
 
 ![image](img/017.png)
 
-## Cliente Windows 7
+## Cliente Windows 7<a name="id11"></a>
 
-### Configuración de la dirección IP estática
+### Configuración de la dirección IP estática <a name="id12"></a>
 
 ![image](img/012.png)
 
-### Configuración de Nombre Equipos
+### Configuración de Nombre Equipos<a name="id13"></a>
 
 ![image](img/013.png)
 
-### Configuración fichero hosts
+### Configuración fichero hosts<a name="id14"></a>
 
 La ruta es `c:\windows\system32\drivers\etc\hosts`
 
 ![image](img/011.png)
 
-### Realizar ping a ssh-server22 y ssh-client22a
+### Realizar ping a ssh-server22 y ssh-client22a<a name="id15"></a>
 
 ![image](img/017.png)
 
-### Instalación de herramienta putty para la conexion ssh
+### Instalación de herramienta putty para la conexion ssh<a name="id16"></a>
 
 Solo tenemos que ir a la página Web putty y descargar su aplicación.
 
 
 ![image](img/031.png)
 
-## Instalación de Servicio openssh
+## Instalación de Servicio openssh<a name="id17"></a>
 
 Primero tenemos que comprobar si tenemos instalado el servicio.
 
@@ -171,7 +222,7 @@ Para instalar el servicio solo tenemos que escribir `sudo zypper install openssh
 
 ![image](img/021.png)
 
-### Comprobación del Servicio ssh
+### Comprobación del Servicio ssh<a name="id18"></a>
 
 Tenemos que escribir el siguiente comando para ver su status `sudo systemctl status sshd`
 
@@ -192,13 +243,13 @@ Para saber que el servidor esta escuchando el puerto 22 de ssh.
 
 ![image](img/024.png)
 
-## Primera conexión SSH desde ssh-client22a
+## Primera conexión SSH desde ssh-client22a<a name="id19"></a>
 
 Primero realizamos una comprobación con le ping para ver si se comunican.
 
 ![image](img/026.png)
 
-### Comprobación del Puerto SSH abierto en el ssh-server22
+### Comprobación del Puerto SSH abierto en el ssh-server22<a name="id20"></a>
 
 Primero necesitamos instalar el nmap.`sudo zypper in nmap`
 
@@ -206,7 +257,7 @@ Escribimos el siguiente comando para ver los puerto de ssh habilitados al ssh-se
 
 ![image](img/027.png)
 
-### Conexión desde ssh-client22a al ssh-server22
+### Conexión desde ssh-client22a al ssh-server22<a name="id21"></a>
 
 Para la conexión solo tenemos que escribir el siguiente comando para conectarnos al ssh-server22
 
@@ -218,11 +269,11 @@ Una vez dentro del ssh-server22.
 
 Salimos fuera de la conexión.
 
-### Fichero de la clave de identificador ssh sha2
+### Fichero de la clave de identificador ssh sha2<a name="id22"></a>
 
 ![image](img/030.png)
 
-## Primera conexión ssh-client22b al ssh-server22
+## Primera conexión ssh-client22b al ssh-server22<a name="id23"></a>
 
 Tenemos que abrir la aplicación de PuTTy.
 
@@ -238,12 +289,12 @@ Solo tenemos que escribir el usuario de conexión del servidor y la contraseña.
 
 ![image](img/035.png)
 
-### Comprobación de la clave de conexión
+### Comprobación de la clave de conexión<a name="id24"></a>
 
 ![image](img/033.png)
 
 
-## Cambiar las claves del servidor.
+## Cambiar las claves del servidor.<a name="id25"></a>
 
 Primero tenemos que ver en qué ruta están las claves. `ls -l /etc/ssh/`
 
@@ -259,7 +310,7 @@ Abrimos con nano el fichero de configuración `sshd_config` y solo tenemos que q
 
 ![image](img/038.png)
 
-### Regenerar Claves RSA nuevas en SSH
+### Regenerar Claves RSA nuevas en SSH<a name="id26"></a>
 
 Solo tenemos que escribir el siguiente comando. `sudo ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key`
 
@@ -273,7 +324,7 @@ Solo nos faltas reiniciar el servicio de sshd
 
 ![image](img/040.png)
 
-### Comprobación en los Equipos ssh-client22a y ssh-client22b las claves RSA
+### Comprobación en los Equipos ssh-client22a y ssh-client22b las claves RSA<a name="id27"></a>
 
 - ssh-client22a
 
@@ -302,7 +353,7 @@ Inicia correctamente el ssh
 
 ![image](img/045.png)
 
-## Personalización del prompt del BASH
+## Personalización del prompt del BASH<a name="id28"></a>
 
 Tenemos que ir a la máquina ssh-server22 y buscar el siguiente fichero del usuario hernandez1 `.bashrc`.
 
@@ -318,13 +369,13 @@ Nos conectamos desde un equipo ssh-client22a y ssh-client22b al ssh-server.
 
 ![image](img/050.png)
 
-### Creación de alias.
+### Creación de alias.<a name="id29"></a>
 
 Tenemos que estar en la ruta home del usuario hernandez1 y creamos un fichero oculto llamado `.alias`.
 
 ![image](img/048.png)
 
-## Autenticación mediante claves públicas
+## Autenticación mediante claves públicas<a name="id30"></a>
 
 El objetivo de la práctia es lograr con el usuario hernandez4 acceder desde ssh sin contraseña, mediante las claves públicas y privadas.
 
@@ -355,17 +406,17 @@ Comprobar que ahora al acceder remotamente vía SSH
 ![image](img/056.png)
 
 
-## Uso de SSH como túnel para X
+## Uso de SSH como túnel para X<a name="id31"></a>
 
 Comprobamos que en el equipo ssh-client22a no tiene instalado el geany.
 
 ![image](img/057.png)
 
-### Instalación geany en el ssh-server22
+### Instalación geany en el ssh-server22<a name="id32"></a>
 
 ![image](img/058.png)
 
-### Configuración del fichero sshd_config
+### Configuración del fichero sshd_config<a name="id33"></a>
 
 solo tenemos que estar en el servidor ssh-server22 y modificar el fichero `sshd_config`
 
@@ -373,7 +424,7 @@ solo tenemos que estar en el servidor ssh-server22 y modificar el fichero `sshd_
 
 Tenemos que tener descomentada la línea `X11Forwarding yes`
 
-### Ejecutar aplicación desde ssh-server22 en ssh-client22a
+### Ejecutar aplicación desde ssh-server22 en ssh-client22a<a name="id34"></a>
 
 Solo tenemos que escribir el siguiente comando, ssh -X hernandez1@ssh-server22
 
@@ -381,7 +432,7 @@ Solo tenemos que escribir el siguiente comando, ssh -X hernandez1@ssh-server22
 
 Escribimos el comando geany y se ejecuta.
 
-## Aplicaciones Windows nativas
+## Aplicaciones Windows nativas<a name="id35"></a>
 
 Instalación de la aplicación `Wine` en el servidor ssh-server22.
 
@@ -401,7 +452,7 @@ Ejecutamos la aplicación `wine notepad` desde el ssh-server22.
 
 ![image](img/064.png)
 
-## Restricciones de uso para el Usuario hernandez2
+## Restricciones de uso para el Usuario hernandez2<a name="id36"></a>
 
 Creamos una restricción para un usuario, hernandez2.
 
@@ -418,7 +469,7 @@ Comprobamos desde el equipo ssh-client22a con el usuario hernandez2 y siempre no
 Comprobamos la restricción al acceder desde los clientes con el usuario hernandez2 y no inicia.
 
 
-## Restricción sobre una aplicación
+## Restricción sobre una aplicación<a name="id37"></a>
 
 Vamos a crear una restricción de permisos sobre determinadas aplicaciones.
 
