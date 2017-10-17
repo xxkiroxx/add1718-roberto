@@ -1,15 +1,30 @@
 # Acceso remoto SSH
 
-- [](#id1)
+- [Servidor SSH](#id1)
 
-- [](#id2)
+    - [Configuración IP](#id2)
 
-- [](#id3)
+    - [Cambio de Nombre ssh-server22](#id3)
 
-- [](#id4)
+    - [Añadir los Equipos al fichero hosts](#id4)
 
-- [](#id5)
+    - [Comprobación de los siguientes comandos](#id5)
 
+    - [Creación de los siguientes usuarios](#id6)
+
+- [Cliente OpenSuSe](#id7)
+
+    - [Configuración de la dirección IP estática](#id8)
+
+    - [Nombre del Equipo y fichero hosts](#id9)
+
+    - [Realizar ping a ssh-server22 y ssh-client22b](#id10)
+
+- [](#id11)
+
+- [](#id12)
+
+- [](#id13)
 
 # Preparativos
 
@@ -340,7 +355,7 @@ Comprobar que ahora al acceder remotamente vía SSH
 ![image](img/056.png)
 
 
-## 6. Uso de SSH como túnel para X
+## Uso de SSH como túnel para X
 
 Comprobamos que en el equipo ssh-client22a no tiene instalado el geany.
 
@@ -366,4 +381,81 @@ Solo tenemos que escribir el siguiente comando, ssh -X hernandez1@ssh-server22
 
 Escribimos el comando geany y se ejecuta.
 
-### Ejecutamos la aplicación desde ssh-server22 en ssh-client22b
+## Aplicaciones Windows nativas
+
+Instalación de la aplicación `Wine` en el servidor ssh-server22.
+
+![image](img/061.png)
+
+Abrimos desde la terminal del ssh-client22a y nos conectamos remoto al ssh-server22.
+
+Ejecutamos la siguiente aplicación. `wine notepad` desde el ssh-client22a
+
+![image](img/062.png)
+
+Vemos como se guarda el fichero
+
+![image](img/063.png)
+
+Ejecutamos la aplicación `wine notepad` desde el ssh-server22.
+
+![image](img/064.png)
+
+## Restricciones de uso para el Usuario hernandez2
+
+Creamos una restricción para un usuario, hernandez2.
+
+Solo tenemos que ir al fichero de configuración de `sshd_config`
+
+
+![image](img/065.png)
+
+Comprobamos desde el equipo ssh-client22a con el usuario hernandez2 y siempre nos pide la contraseña, no podemos acceder vía ssh.
+
+![image](img/066.png)
+
+
+Comprobamos la restricción al acceder desde los clientes con el usuario hernandez2 y no inicia.
+
+
+## Restricción sobre una aplicación
+
+Vamos a crear una restricción de permisos sobre determinadas aplicaciones.
+
+- Crear grupo remoteapps
+
+![image](img/067.png)
+
+- Incluir al usuario hernandez4 en el grupo remoteapps.
+
+![image](img/068.png)
+
+Localizar el programa APP1. Posiblemente tenga permisos 755.
+
+![image](img/069.png)
+
+![image](img/070.png)
+
+Poner al programa APP1 el grupo propietario a remoteapps.
+
+![image](img/071.png)
+
+Poner los permisos del ejecutable de APP1 a 750. Para impedir que los usuarios que no pertenezcan al grupo puedan ejecutar el programa.
+
+![image](img/072.png)
+
+
+Comprobamos el funcionamiento en el servidor.
+
+![image](img/073.png)
+
+Comprobamos el funcionamiento desde el cliente.
+
+Si iniciamos el SSH con el usuario hernandez4
+podemos abrir el geany
+
+![image](img/074.png)
+
+Si iniciamos el SSH con el usuario hernandez1 no podemos abrir el geany.
+
+![image](img/075.png)
