@@ -1175,26 +1175,120 @@ roberto@smb-client22a:~>
 
 Desde en entorno gráfico, podemos comprobar el acceso a recursos compartidos SMB/CIFS.
 
-Yast en OpenSUSE
+Solo tenemos que buscar las `redes -> Buscar en la red -> smb-server22 -> seleccionar nuestro recurso`
 
 
+![img](img/027.png)
 
-Una forma de acceder al recurso castillo del servidor Samba, pulsamos CTRL+L y escribimos `smb://smb-server22/castillo`
+![img](img/028.png)
+
+- Estos son nuestros recursos.
+
+![img](img/026.png)
+
+- Probar a crear carpetas/archivos en castillo y en barco.
+
+    - Recurso compartido barco
 
 
+![img](img/029.png)
 
-Probar a crear carpetas/archivos en castillo y en barco.
+![img](img/030.png)
+
+    - Recurso compartido castillo
+
+![img](img/031.png)
+
+![img](img/032.png)
+
+    - Recursos compartido Público
+
+![img](img/033.png)
 
 
 Comprobar que el recurso public es de sólo lectura.
 
-
+![img](img/034.png)
 
 - smbstatus, desde el servidor Samba.
 
+```console
+
+roberto@smb-server22:~> sudo smbstatus
+root's password:
+
+Samba version 4.4.2-7.2-3709-SUSE-SLE_12-x86_64
+PID     Username     Group        Machine                                   Protocol Version  Encryption           Signing              
+----------------------------------------------------------------------------------------------------------------------------------------
+2570    nobody       nobody       smb-client22a (ipv4:172.18.22.32:48872)   NT1               -                    -                    
+2571    nobody       nobody       smb-client22a (ipv4:172.18.22.32:48874)   NT1               -                    -                    
+2575    pirata1      users        172.18.22.32 (ipv4:172.18.22.32:51592)    NT1               -                    -                    
+2577    soldado1     users        172.18.22.32 (ipv4:172.18.22.32:51596)    NT1               -                    -                    
+2571    -1           -1           smb-client22a (ipv4:172.18.22.32:48874)   NT1               -                    -                    
+2570    -1           -1           smb-client22a (ipv4:172.18.22.32:48872)   NT1               -                    -                    
+2579    supersamba   users        172.18.22.32 (ipv4:172.18.22.32:51600)    NT1               -                    -                    
+
+Service      pid     Machine       Connected at                     Encryption   Signing     
+---------------------------------------------------------------------------------------------
+IPC$         2570    smb-client22a jue oct 26 18:54:21 2017 WEST    -            -           
+barco        2575    172.18.22.32  jue oct 26 18:58:05 2017 WEST    -            -           
+castillo     2577    172.18.22.32  jue oct 26 18:58:53 2017 WEST    -            -           
+public       2579    172.18.22.32  jue oct 26 18:59:33 2017 WEST    -            -           
+IPC$         2571    smb-client22a jue oct 26 18:54:26 2017 WEST    -            -           
+
+No locked files
+
+roberto@smb-server22:~>
+
+
+```
+
 - netstat -ntap, desde el servidor Samba.
 
+```console
+
+roberto@smb-server22:~> sudo netstat -ntap
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name   
+tcp        0      0 0.0.0.0:5801            0.0.0.0:*               LISTEN      1457/xinetd         
+tcp        0      0 0.0.0.0:139             0.0.0.0:*               LISTEN      1835/smbd           
+tcp        0      0 0.0.0.0:5901            0.0.0.0:*               LISTEN      1448/vncmanager     
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1488/sshd           
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      1446/cupsd          
+tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN      1835/smbd           
+tcp        0      0 172.18.22.31:139        172.18.22.32:48872      ESTABLISHED 2570/smbd           
+tcp        0      0 172.18.22.31:445        172.18.22.32:51600      ESTABLISHED 2579/smbd           
+tcp        0      0 172.18.22.31:139        172.18.22.32:48874      ESTABLISHED 2571/smbd           
+tcp        0      0 172.18.22.31:445        172.18.22.32:51596      ESTABLISHED 2577/smbd           
+tcp        0      0 172.18.22.31:445        172.18.22.32:51592      ESTABLISHED 2575/smbd           
+tcp        0      0 :::139                  :::*                    LISTEN      1835/smbd           
+tcp        0      0 :::5901                 :::*                    LISTEN      1448/vncmanager     
+tcp        0      0 :::22                   :::*                    LISTEN      1488/sshd           
+tcp        0      0 ::1:631                 :::*                    LISTEN      1446/cupsd          
+tcp        0      0 ::1:25                  :::*                    LISTEN      1760/master         
+tcp        0      0 :::445                  :::*                    LISTEN      1835/smbd           
+roberto@smb-server22:~>
+
+
+```
+
 - netstat -n, desde el cliente.
+
+```console
+
+roberto@smb-client22a:~> sudo netstat -n
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        4      0 172.18.22.32:51592      172.18.22.31:445        ESTABLISHED
+tcp        8      0 172.18.22.32:48872      172.18.22.31:139        ESTABLISHED
+tcp        4      0 172.18.22.32:48874      172.18.22.31:139        ESTABLISHED
+tcp        0      0 172.18.22.32:51600      172.18.22.31:445        ESTABLISHED
+tcp        4      0 172.18.22.32:51596      172.18.22.31:445        ESTABLISHED
+udp        0      0 172.18.22.32:52356      8.8.8.8:53              ESTABLISHED
+Active UNIX domain sockets (w/o servers)
+
+
+```
 
 
 
@@ -1866,16 +1960,38 @@ roberto@smb-client22a:~>
 ### 3.3 Montaje automático
 
 
-Acabamos de acceder a los recursos remotos, realizando un montaje de forma manual (comandos `mount/umount`). Si reiniciamos el equipo cliente, podremos ver que los montajes realizados de forma manual ya no están (`df -hT`). Si queremos volver a acceder a los recursos remotos debemos repetir el proceso de montaje manual, a no ser que hagamos una configuración de montaje permanente o automática.
-
 Para configurar acciones de montaje automáticos cada vez que se inicie el equipo, debemos configurar el fichero `/etc/fstab`. Veamos un ejemplo:
 
 - `//smb-server22/public /mnt/remoto22/public cifs username=soldado1,password=clave 0 0`
 
+
+```console
+
+roberto@smb-client22a:~> sudo mkdir /mnt/samba22-remoto/public
+roberto@smb-client22a:~> sudo nano /etc/fstab
+roberto@smb-client22a:~> sudo cat /etc/fstab | grep smb
+//smb-server22/public /mnt/remoto22/public cifs username=soldado1,password=78619841e 0 0
+
+
+```
+
 Reiniciar el equipo y comprobar que se realiza el montaje automático al inicio.
 
 
+```console
 
+roberto@smb-client22a:~/Escritorio> df -hT | grep smb
+//smb-server22/public cifs        13G   6,2G  6,3G  50% /mnt/remoto22/public
+roberto@smb-client22a:~/Escritorio> ls -l /mnt/remoto22/public/
+total 0
+-rw-r--r--+ 1 root root 0 oct 26 19:13 hola.txt
+roberto@smb-client22a:~/Escritorio> sudo cat /etc/fstab | grep smb
+root's password:
+//smb-server22/public /mnt/remoto22/public cifs username=soldado1,password=78619841e 0 0
+roberto@smb-client22a:~/Escritorio>
+
+
+```
 
 ## 4. Preguntas para resolver
 
