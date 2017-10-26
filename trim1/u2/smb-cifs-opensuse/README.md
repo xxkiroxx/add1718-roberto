@@ -1302,6 +1302,22 @@ Primero comprobar el uso de las siguientes herramientas:
 
 Hay que abrir el cortafuegos para que funcione.
 
+```console
+
+roberto@smb-client22a:~/Escritorio> sudo smbtree
+root's password:
+Enter root's password:
+MAR1718
+	\\SMB-SERVER22   		Samba 4.4.2-7.2-3709-SUSE-SLE_12-x86_64
+		\\SMB-SERVER22\IPC$           	IPC Service (Samba 4.4.2-7.2-3709-SUSE-SLE_12-x86_64)
+		\\SMB-SERVER22\public         	file public
+		\\SMB-SERVER22\cdrom          	CDROM
+		\\SMB-SERVER22\castillo       	file castle
+		\\SMB-SERVER22\barco          	file boat
+roberto@smb-client22a:~/Escritorio>
+
+```
+
 - `smbclient --list=172.18.22.31` # Muestra los recursos SMB/CIFS de un equipo concreto
 
 ```console
