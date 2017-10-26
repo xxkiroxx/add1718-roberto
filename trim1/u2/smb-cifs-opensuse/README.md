@@ -317,32 +317,32 @@ cdrom, es el recurso dispositivo cdrom de la máquina donde está instalado el s
   - guest ok = yes
   - read only = yes
 
- ![img](006.png)
+ ![img](img/006.png)
 
 - [public]
   - path = /srv/samba22/public.d
   - guest ok = yes
   - read only = yes
 
-![img](007.png)
+![img](img/007.png)
 
 - [castillo]
   - path = /srv/samba22/castillo.d
   - read only = no
   - valid users = @soldados
 
- ![img](008.png)
+ ![img](img/008.png)
 
 - [barco]
   - path = /srv/sambaXX/piratas.d
   - read only = no
   - valid users = pirata1, pirata2
 
- ![img](009.png)
+ ![img](img/009.png)
 
 - Resultado final desde gráfico.
 
-![img](010.png)
+![img](img/010.png)
 
 
 Abrimos una consola para comprobar los resultados.
@@ -857,34 +857,156 @@ Nmap done: 1 IP address (1 host up) scanned in 1.56 seconds
 
 ## 2. Windows (MV3 smb-cli22b)
 Configurar el cliente Windows.
-Usar nombre smb-cliXXb y la IP que hemos establecido.
-Configurar el fichero ...\etc\hosts de Windows.
-En los clientes Windows el software necesario viene preinstalado.
+Usar nombre smb-cli22b y la IP que hemos establecido.
+
+```console
+
+Microsoft Windows [Versión 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation. Reservados todos los derechos.
+
+C:\Windows\system32>hostname
+smb-client22b
+
+C:\Windows\system32>ipconfig
+
+Configuración IP de Windows
+
+
+Adaptador de Ethernet Conexión de área local:
+
+   Sufijo DNS específico para la conexión. . :
+   Vínculo: dirección IPv6 local. . . : fe80::1036:42a:63e0:b9b%11
+   Dirección IPv4. . . . . . . . . . . . . . : 172.18.22.11
+   Máscara de subred . . . . . . . . . . . . : 255.255.0.0
+   Puerta de enlace predeterminada . . . . . : 172.18.0.1
+
+Adaptador de túnel isatap.{EDAC9220-24B4-4EBD-BF38-DB29514CDEB7}:
+
+   Estado de los medios. . . . . . . . . . . : medios desconectados
+   Sufijo DNS específico para la conexión. . :
+
+C:\Windows\system32>
+
+```
+
+Configurar el fichero `c:\windows\system32\drivers\etc\hosts`
+
+
+![img](img/011.png)
+
 
 ### 2.1 Cliente Windows GUI
 
 Desde un cliente Windows vamos a acceder a los recursos compartidos del servidor Samba.
 
+![img](img/012.png)
+
+![img](img/017.png)
+
 samba-win7-cliente-gui
 
 Comprobar los accesos de todas las formas posibles. Como si fuéramos:
-un soldado
-un pirata
-y/o un invitado.
+
+- Accedemos con soldado1 al recurso compartido de castillo
+
+![img](img/015.png)
+
+- Creamos un fichero de texto con soldado1
+
+![img](img/016.png)
+
+
+- Accedemos con pirata1 al recurso compartido de barco
+
+![img](img/013.png)
+
+- Creamos un fichero de texto con pirata1
+
+![img](img/014.png)
+
+
+- Con la cuenta smbguest
+
+Si accedemos al recurso barco o castillo no podemos acceder con la cuenta invitado.
+
+![img](img/018.png)
+
+
 Después de cada conexión se quedan guardada la información en el cliente Windows (Ver comando net use).
+
 net use * /d /y, para cerrar las conexión SMB/CIFS que se ha realizado desde el cliente al servidor.
+
+![img](img/019.png)
+
 Capturar imagen de los siguientes comandos para comprobar los resultados:
-smbstatus, desde el servidor Samba.
-netstat -ntap, desde el servidor Samba.
-netstat -n, desde el cliente Windows.
 
 
-###2.2 Cliente Windows comandos
+- smbstatus, desde el servidor Samba.
 
-En el cliente Windows, para consultar todas las conexiones/recursos conectados hacemos C:>net use.
+```console
+roberto@smb-server22:~> sudo smbstatus
+
+Samba version 4.4.2-7.2-3709-SUSE-SLE_12-x86_64
+PID     Username     Group        Machine                                   Protocol Version  Encryption           Signing              
+----------------------------------------------------------------------------------------------------------------------------------------
+7275    pirata2      users        172.18.22.11 (ipv4:172.18.22.11:49218)    SMB2_10           -                    -                    
+
+Service      pid     Machine       Connected at                     Encryption   Signing     
+---------------------------------------------------------------------------------------------
+barco        7275    172.18.22.11  jue oct 26 12:04:47 2017 WEST    -            -           
+
+Locked files:
+Pid          Uid        DenyMode   Access      R/W        Oplock           SharePath   Name   Time
+--------------------------------------------------------------------------------------------------
+7275         1007       DENY_NONE  0x100081    RDONLY     NONE             /srv/samba22/barco.d   .   Thu Oct 26 12:04:47 2017
+
+
+```
+- netstat -ntap, desde el servidor Samba.
+
+```console
+
+roberto@smb-server22:~> sudo netstat -ntap
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name   
+tcp        0      0 0.0.0.0:5801            0.0.0.0:*               LISTEN      1465/xinetd         
+tcp        0      0 0.0.0.0:139             0.0.0.0:*               LISTEN      7255/smbd           
+tcp        0      0 0.0.0.0:5901            0.0.0.0:*               LISTEN      1457/vncmanager     
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1509/sshd           
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      1456/cupsd          
+tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN      7255/smbd           
+tcp        0      0 :::139                  :::*                    LISTEN      7255/smbd           
+tcp        0      0 :::5901                 :::*                    LISTEN      1457/vncmanager     
+tcp        0      0 :::22                   :::*                    LISTEN      1509/sshd           
+tcp        0      0 ::1:631                 :::*                    LISTEN      1456/cupsd          
+tcp        0      0 ::1:25                  :::*                    LISTEN      1769/master         
+tcp        0      0 :::445                  :::*                    LISTEN      7255/smbd           
+roberto@smb-server22:~>
+
+
+```
+- netstat -n, desde el cliente Windows.
+
+
+![img](img/020.png)
+
+
+### 2.2 Cliente Windows comandos
+
+En el cliente Windows, para consultar todas las conexiones/recursos conectados hacemos `C:>net use`
+
+![img](img/021.png)
+
+
 Si hubiera alguna conexión abierta la cerramos.
+
 net use * /d /y, para cerrar las conexiones SMB.
+
+![img](img/021.png)
+
 net use ahora vemos que NO hay conexiones establecidas.
+
+
 Capturar imagen de los comandos siguientes:
 
 Abrir una shell de windows. Usar el comando net use /?, para consultar la ayuda del comando.
