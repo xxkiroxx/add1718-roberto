@@ -1,12 +1,40 @@
 # Samba con OpenSUSE
 
+- [1. Servidor Samba](#1)
+
+    - [1.1 Preparativos](#2)
+    - [1.2 Usuarios Locales](#3)
+    - [1.3 Crear las carpetas para los futuros recursos compartidos](#4)
+    - [1.4 Instalar Samba server](#5)
+    - [1.5 Configurar el servidor Samba](#6)
+    - [1.6 Usuarios Samba](#7)
+    - [1.7 Reiniciar el Servicio Samba](#8)
+
+
+- [2. Windows smb-cli22b](#9)
+
+    - [2.1 Cliente Windows GUI](#10)
+    - [2.2 Cliente Windows comandos](#11)
+    - [2.3 Montaje automático](#12)
+
+
+- [3. Cliente OpenSUSE smb-client22a](#13)
+
+    - [3.1 Cliente OpenSUSE GUI](#14)
+    - [3.2 Cliente OpenSUSE comandos](#15)
+    - [3.3 Montaje automático](#16)
+    
+
+- [4. Preguntas para resolver](#17)
+
+
 ![img](img/000.png)
 
 
 
 
-## 1. Servidor Samba (MV1)
-### 1.1 Preparativos
+## 1. Servidor Samba (MV1)<a name="1"></a>
+### 1.1 Preparativos<a name="2"></a>
 
 Configurar el servidor OpenSUSE.
 
@@ -95,7 +123,7 @@ root's password:
 ```
 
 
-### 1.2 Usuarios locales
+### 1.2 Usuarios locales<a name="3"></a>
 
 
 Vamos a OpenSUSE, y creamos los siguientes grupos y usuarios:
@@ -176,7 +204,7 @@ roberto@smb-server22:~>
 
 
 ```
-### 1.3 Crear las carpetas para los futuros recursos compartidos
+### 1.3 Crear las carpetas para los futuros recursos compartidos<a name="4"></a>
 
 Vamos a crear las carpetas de los recursos compartidos con los permisos siguientes:
 
@@ -232,7 +260,7 @@ drwxrwxr-x 1 supersamba todos    0 oct 26 09:37 public.d
 
 
 ```
-### 1.4 Instalar Samba Server
+### 1.4 Instalar Samba Server<a name="5"></a>
 
 Comprobamos que tenemos instalado el samba en nuestro OpenSUSE.
 
@@ -289,7 +317,7 @@ En la pestaña de Inicio definimos
 
 ![img](img/005.png)
 
-### 1.5 Configurar el servidor Samba
+### 1.5 Configurar el servidor Samba<a name="6"></a>
 
 Configuración de los recursos compartido del servidor Samba.
 
@@ -564,7 +592,7 @@ Press enter to see a dump of your service definitions
 ```
 
 
-### 1.6 Usuarios Samba
+### 1.6 Usuarios Samba<a name="7"></a>
 
 Tenemos que añadir los usuarios locales a samba.
 
@@ -616,7 +644,7 @@ roberto@smb-server22:~>
 ```
 
 
-### 1.7 Reiniciar
+### 1.7 Reiniciar<a name="8"></a>
 
 Tenemos que reiniciar el servicio de samba.
 
@@ -855,7 +883,7 @@ Nmap done: 1 IP address (1 host up) scanned in 1.56 seconds
 
 
 
-## 2. Windows (MV3 smb-cli22b)
+## 2. Windows (MV3 smb-cli22b)<a name="9"></a>
 Configurar el cliente Windows.
 Usar nombre smb-cli22b y la IP que hemos establecido.
 
@@ -895,7 +923,7 @@ Configurar el fichero `c:\windows\system32\drivers\etc\hosts`
 ![img](img/011.png)
 
 
-### 2.1 Cliente Windows GUI
+### 2.1 Cliente Windows GUI<a name="10"></a>
 
 Desde un cliente Windows vamos a acceder a los recursos compartidos del servidor Samba.
 
@@ -991,7 +1019,7 @@ roberto@smb-server22:~>
 ![img](img/020.png)
 
 
-### 2.2 Cliente Windows comandos
+### 2.2 Cliente Windows comandos<a name="11"></a>
 
 En el cliente Windows, para consultar todas las conexiones/recursos conectados hacemos `C:>net use`
 
@@ -1060,7 +1088,7 @@ C:\Users\roberto>
 
 
 
-### 2.3 Montaje automático
+### 2.3 Montaje automático<a name="12"></a>
 
 El comando `net use S: \\smb-server22\barco /USER:pirata1 clave` y lo monta en la unidad S.
 
@@ -1125,7 +1153,7 @@ roberto@smb-server22:~>
 ![](img/025.png)
 
 
-## 3 Cliente OpenSUSE (smb-client22a)
+## 3 Cliente OpenSUSE (smb-client22a)<a name="13"></a>
 
 Configurar el cliente OpenSUSE.
 Usar nombre smb-client22a y la IP que hemos establecido.
@@ -1171,7 +1199,7 @@ roberto@smb-client22a:~>
 
 ```
 
-### 3.1 Cliente OpenSUSE GUI
+### 3.1 Cliente OpenSUSE GUI<a name="14"></a>
 
 Desde en entorno gráfico, podemos comprobar el acceso a recursos compartidos SMB/CIFS.
 
@@ -1292,7 +1320,7 @@ Active UNIX domain sockets (w/o servers)
 
 
 
-### 3.2 Cliente OpenSUSE comandos smb-client22a
+### 3.2 Cliente OpenSUSE comandos smb-client22a<a name="15"></a>
 
 
 Existen comandos `(smbclient, mount , smbmount, etc.)` para ayudarnos a acceder vía comandos al servidor Samba desde el cliente.
@@ -1973,7 +2001,7 @@ roberto@smb-client22a:~>
 
 ```
 
-### 3.3 Montaje automático
+### 3.3 Montaje automático<a name="16></a>
 
 
 Para configurar acciones de montaje automáticos cada vez que se inicie el equipo, debemos configurar el fichero `/etc/fstab`. Veamos un ejemplo:
@@ -2009,7 +2037,7 @@ roberto@smb-client22a:~/Escritorio>
 
 ```
 
-## 4. Preguntas para resolver
+## 4. Preguntas para resolver<a name="17"></a>
 
 - ¿Las claves de los usuarios en OpenSUSE deben ser las mismas que las que usa Samba?
 
