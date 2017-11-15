@@ -465,3 +465,31 @@ roberto@ldap-client22:~> su pirata21
 Contraseña:
 pirata21@ldap-client22:/home/roberto>
 ```
+Realizamos la comprobación con el entorno gráfico.
+
+![](img/034.png)
+
+![](img/033.png)
+
+
+# ANEXO Problema
+
+En ocasiones al instalar en el cliente ldap no funciona y se queda sin iniciar sesión. Para solucionar el problema tenemos que entrar con un knoppix y modificar el fichero de configuración `/etc/nsswitch.conf`
+
+Tenemos que comentar las siguientes líneas.
+```console
+#passwd:    compat ldap
+#group:     compat ldap
+```
+y descomentar las siguientes líneas.
+
+```console
+passwd: files nis
+shadow: files nis
+group:  files nis
+```
+![](img/036.png)
+
+- Tenemos que volver de nuevo al yast -> ldap y cliente y volvemos a marcar usuario y grupo.
+
+![](img/037.png)
