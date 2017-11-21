@@ -119,24 +119,37 @@ Solo tenemos que darle siguiente y nos dirá que tiene que instalar el servicio 
 
 ### 2.1 Comprobación desde el navegador del cliente.
 
+Ejecutamos el cliente Windows 7 y abrimos un navegador de Internet y escribimos lo siguiente.
+
+`http://hernandez22s/printers` por lo tantos podemos entrar en la configuración de las impresoras.
+
 ![](img/034.png)
+
+- Encontramos la impresora de pdfcreator con el nombre de `pdfroberto22`.
+
 ![](img/035.png)
+
+- Entramos dentro de la impresora y comprobamos que no tenemos ningún documento en cola.
+
 ![](img/036.png)
+
+### 2.2 Agregar una impresora desde la Web.
+
+Solo tenemos que acceder a la página web de la impresora, `http://hernandez22s/printers` y vamos a la pestaña conectar y nos muestra un mensaje que indica si queremos agregar dicha impresora.
+
 ![](img/037.png)
+
+Nos muestra un mensaje como que se instalado la impresora en el equipo cliente.
+
 ![](img/038.png)
+
+### 2.3 Comprobando el parar la impresora
+
+Nos conectamos a la página web de la impresora, `http://hernandez22s/printers` y pausamos la impresora, realizamos una prueba de impresión y nos indica que tenemos un documento en cola. Si le quitamos el pause a la impresora y activamos que este disponible, imprime automaticamente el documento.
+
 ![](img/039.png)
 
 
-
-Vamos a realizar seguidamente una prueba sencilla en tu impresora de red a través del navegador pausa todos los trabajos en la impresora. Luego envía a imprimir en tu impresora compartida un documento del Bloc de notas. La siguiente pantalla muestra que la impresora esta en pausa y con el trabajo en cola de impresión.
-
-
-Finalmente pulsa en reanudar el trabajo para que tu documento se convierta a PDF. Comprobar que se puede imprimir desde un cliente Windows.
-
-Si tenemos problemas para acceder a la impresora de red desde el cliente Windows:
-
-Revisar la configuración de red de la máquina (Incluido la puerta de enlace)
-Reiniciar el servidor Windows Server que contiene la impresora compartida de red.
 ## 3. Servidor de impresión en el servidor
 
 Activar rol/característica de servidor impresión
