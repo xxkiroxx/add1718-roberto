@@ -260,3 +260,29 @@ Para confirmar que hay un servicio a la escucha en 4567, desde la máquina real 
 ![](img/013.png)
 
 ## 4. Ejemplos de configuración Vagrantfile
+
+A continuación se muestran ejemplos de configuración Vagrantfile que NO ES NECESARIO hacer. Sólo es información.
+
+    Enlace de interés Tutorial Vagrant. ¿Qué es y cómo usarlo?
+
+
+Ejemplo para configurar la red:
+
+    config.vm.network "private_network", ip: "192.168.33.10"
+
+Ejemplo para configurar las carpetas compartidas:
+
+    config.vm.synced_folder "htdocs", "/var/www/html"
+
+Ejemplo para configurar la conexión SSH de vagrant a nuestra máquina virtual:
+
+    config.ssh.username = 'root'
+    config.ssh.password = 'vagrant'
+    config.ssh.insert_key = 'true'
+
+Ejemplo para configurar la ejecución remota de aplicaciones gráficas instaladas en la máquina virtual, mediante SSH:
+
+    config.ssh.forward_agent = true
+    config.ssh.forward_x11 = true
+
+## 5. Suministro
