@@ -905,3 +905,11 @@ Vemos si tenemos creado la caja
 Comprobamos si tenemos agregado las cajas.
 
 ![](img/031.png)
+
+Todavia no tenemos agregado la caja, tenemos que introducir el siguiente comando.
+
+![](img/032.png)
+
+Comenzamos a lanzar la máquina virtual.
+
+![](img/033.png)
