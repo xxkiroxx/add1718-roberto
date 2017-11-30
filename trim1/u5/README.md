@@ -912,4 +912,22 @@ Todavia no tenemos agregado la caja, tenemos que introducir el siguiente comando
 
 Comenzamos a lanzar la máquina virtual.
 
-![](img/033.png)
+    Nota
+    En mi portátil tengo poco espacio libre, por lo tanto cuando intenta descomprimir la caja, me dice que tengo espacio insuficiente, porque al descomprimir va a los archivos temporales y me da fallo de espacio en disco. Por lo tanto con mi caja la llevo al pc de kevin y ejecuto la caja y funciona correctamente, por eso las siguientes capturas son de la terminal del equipo de kevin.
+
+
+![](img/035.png)
+
+- Comprobamos que se conecta correctamente.
+
+![](img/036.png)
+
+- Comprobamos que nos conectamos mediante `ssh` y no pide en ningún momento la contraseña.
+
+![](img/037.png)
+
+- Estamos conectados a la máquina virtual mediante vagrant.
+
+![](img/038.png)
+
+- Comprobamos que estamos en la máquina virtual. 
