@@ -1,5 +1,7 @@
 # Vagrant y VirtualBox
 
+![](img/000.png)
+
 ## 1. Introducción
 
 Según Wikipedia:
@@ -930,4 +932,4 @@ Comenzamos a lanzar la máquina virtual.
 
 ![](img/038.png)
 
-- Comprobamos que estamos en la máquina virtual. 
+- Comprobamos que estamos en la máquina virtual.
