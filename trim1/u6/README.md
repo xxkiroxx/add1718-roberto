@@ -1541,6 +1541,8 @@ Ya tenemos creado la imagen
 
     `docker save -o ~/container-backup.tar container-backup, guardamos la imagen "container-backup" en un fichero tar.`
 
+![](img/032.png)
+
 - Importar imagen docker desde fichero:
 
     - Nos llevamos el tar a otra máquina con docker instalado, y restauramos.
