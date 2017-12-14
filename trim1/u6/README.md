@@ -1548,3 +1548,5 @@ Ya tenemos creado la imagen
     - Nos llevamos el tar a otra máquina con docker instalado, y restauramos.
     - docker load -i ~/container-backup.tar, cargamos la imagen docker a partir del fichero tar.
     - docker images, comprobamos que la nueva imagen está disponible.
+
+![](img/033.png)
