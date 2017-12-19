@@ -858,7 +858,7 @@ CONTAINER ID   IMAGE      COMMAND       CREATED          STATUS         PORTS  N
 
 - Ahora con esto podemos crear la nueva imagen a partir de los cambios que realizamos sobre la imagen base:
 
-`docker commit 7d193d728925 dvarrui/nginx`
+`docker commit 7d193d728925 roberto/nginx`
 `docker images`
 
 ![](img/017.png)
@@ -887,7 +887,7 @@ Bien, tenemos una imagen con Nginx instalado, probemos ahora la magia de Docker.
 ```console
 docker ps
 docker ps -a
-docker run --name=mv_nginx -p 80 -t dvarrui/nginx /root/server.sh
+docker run --name=mv_nginx -p 80 -t roberto/nginx /root/server.sh
 Booting Nginx!
 Waiting...
 ```
@@ -899,7 +899,7 @@ Los mensajes muestran que el script server.sh está en ejecución. No parar el p
 - El argumento -p 80 le indica a Docker que debe mapear el puerto especificado del contenedor, en nuestro caso el puerto 80 es el puerto por defecto sobre el cual se levanta Nginx.
 
 - El script server.sh nos sirve para iniciar el servicio y permanecer en espera. Lo podemos hacer también con el prgorama Supervisor.
-    - docker run --name=mv_nginx -p 80 -t dvarrui/nginx /usr/sbin/supervisor
+    - docker run --name=mv_nginx -p 80 -t roberto/nginx /usr/sbin/supervisor
 
 - Abrimos una nueva terminal.
 - docker ps, nos muestra los contenedores en ejecución. Podemos apreciar que la última columna nos indica que el puerto 80 del contenedor está redireccionado a un puerto local 0.0.0.0.:32768->80/tcp.
@@ -976,7 +976,7 @@ El fichero Dockerfile contiene la información necesaria para construir el conte
 ```
 cd /home/alumno/docker            # Entramos al directorio del Dockerfile
 docker images                     # Consultamos las imágenes disponibles
-docker build -t dvarrui/nginx2 .  # Construye imagen a partir del Dockefile
+docker build -t roberto/nginx2 .  # Construye imagen a partir del Dockefile
                                   # OJO el punto es necesario
 docker images                     # Debe aparecer nuestra nueva imagen
 ```
