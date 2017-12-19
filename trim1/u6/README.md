@@ -1557,3 +1557,28 @@ Ya tenemos creado la imagen
 Comprobamos que se ejecuta el contenedor de `kevin`.
 
 ![](img/034.png)
+
+# ANEXO
+
+## A.1 supervisord
+
+Dentro del contenedor:
+
+    Instalar el supervidor apt-get install -y supervisor
+    Crear una configuración personalizado para Nginx con Supervisor. Crear /etc/supervisor/conf.d/supervisord.conf con el siguiente contenido:
+```
+[supervisord]
+nodaemon=true
+
+[program:nginx]
+command = /usr/sbin/nginx -g "daemon off;"
+username = www-data
+autorestart = true
+stdout_logfile = /dev/stdout
+stdout_logfile_maxbytes = 0
+stderr_logfile = /dev/stderr
+stderr_logfile_maxbytes = 0
+```
+
+- Hacemos la imagen dvarrui/nginx.
+- En la máquina real podemos invocar el contenedor de la siguiente forma: docker run --name=con_nginx -p 80 -t dvarrui/nginx /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
