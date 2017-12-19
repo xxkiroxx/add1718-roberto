@@ -1,4 +1,7 @@
 # Docker
+
+![](img/000.png)
+
 ## 1. Introducción
 
 Es muy común que nos encontremos desarrollando una aplicación y llegue el momento que decidamos tomar todos sus archivos y migrarlos ya sea al ambiente de producción, de prueba o simplemente probar su comportamiento en diferentes plataformas y servicios. Para situaciones de este estilo existen herramientas que, entre otras cosas, nos facilitan el embalaje y despliegue de la aplicación, es aquí donde entra en juego Docker.
@@ -716,6 +719,7 @@ done
 - Tenemos que darle permiso de ejecución.
 
 ![](img/013.png)
+
 Recordatorio:
 
 - Hay que poner permisos de ejecución al script para que se pueda ejecutar.
@@ -939,6 +943,7 @@ docker ps -a
 - Crear directorio /home/roberto/docker22, poner dentro los siguientes ficheros.
 
 - Crear el fichero Dockerfile con el siguiente contenido:
+
 ```console
 FROM debian:8
 
