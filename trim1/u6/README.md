@@ -925,8 +925,6 @@ docker ps -a
 
 ## 6. Crear un contenedor con Dockerfile
 
-Ahora vamos a conseguir el mismo resultado del apartado anterior, pero usando un fichero de configuración, llamado Dockerfile6. Crear un contenedor con Dockerfile
-
 Ahora vamos a conseguir el mismo resultado del apartado anterior, pero usando un fichero de configuración, llamado Dockerfile
 
 ### 6.1 Comprobaciones iniciales:
