@@ -1555,3 +1555,7 @@ Ya tenemos creado la imagen
     - docker images, comprobamos que la nueva imagen está disponible.
 
 ![](img/033.png)
+
+Comprobamos que se ejecuta el contenedor de `kevin`.
+
+![](img/034.png)
