@@ -709,3 +709,216 @@ roberto@cli1alu22:~>
 ```console
 roberto@cli1alu22:~> sudo systemctl start puppet
 ```
+
+## 4. Certificados
+
+Tenemos que intercambiar los certificados entre ambas máquinas.
+
+### 4.1 Aceptar certificados
+
+- Vamos a la MV Master22
+- Nos aseguramos de que somos el usuario `root`
+- `puppet cert list`, consultamos las peticiones pendiente de unión al master22.
+
+![](img/007.png)
+
+- Vamos aceptar el certificado del cliente cli1alu22.curso1718 en el master22.
+
+```console
+master22:~ # puppet cert sign "cli1alu22.curso1718"
+Notice: Signed certificate request for cli1alu22.curso1718
+Notice: Removing file Puppet::SSL::CertificateRequest cli1alu22.curso1718 at '/var/lib/puppet/ssl/ca/requests/cli1alu22.curso1718.pem'
+master22:~ # puppet cert list
+master22:~ # puppet cert print cli1alu22.curso1718
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 3 (0x3)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN=Puppet CA: master22.curso1718
+        Validity
+            Not Before: Jan 15 10:07:33 2018 GMT
+            Not After : Jan 15 10:07:33 2023 GMT
+        Subject: CN=cli1alu22.curso1718
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (4096 bit)
+                Modulus:
+                    00:b3:e2:da:40:46:20:68:6b:09:7a:a8:fa:88:ae:
+                    8c:14:46:b0:20:92:5a:f4:d4:d4:73:57:f2:fb:79:
+                    df:1b:19:33:ab:f2:8e:a8:41:e8:ea:00:36:b1:b3:
+                    44:7a:20:67:93:40:27:98:24:2c:d9:1b:f9:9a:0d:
+                    a0:f2:fe:1a:ca:70:eb:fc:37:ec:5e:71:a8:64:b3:
+                    63:88:70:ae:af:a1:db:ac:44:83:11:b5:02:e6:27:
+                    c0:8d:e4:fe:02:ae:8d:11:d5:df:67:cc:52:80:51:
+                    6d:d8:c0:50:31:8d:21:6c:f6:3c:b4:d3:cf:a5:6b:
+                    61:f2:fd:5b:2a:4d:90:cb:ed:5f:e8:3b:51:b4:bf:
+                    77:54:57:d9:43:07:d2:77:7e:4c:58:68:ef:65:30:
+                    b1:bd:9a:d0:ec:3a:7a:95:32:94:b1:ed:d4:57:f0:
+                    5a:0c:a3:42:2c:ba:04:b0:61:65:f4:e2:4f:95:91:
+                    0f:3d:84:df:41:35:72:fa:f6:20:6f:14:18:e5:bf:
+                    04:95:23:62:12:ac:33:20:bb:8d:86:91:99:19:d1:
+                    08:29:fa:48:d1:b4:64:ad:51:9e:eb:cd:e1:0d:7d:
+                    3b:43:46:36:cc:6b:c4:55:9e:df:71:36:af:14:ea:
+                    42:8f:75:2a:f0:11:d4:f4:cb:bb:91:03:c6:fb:50:
+                    9e:03:ec:8f:92:e5:38:80:ed:c6:d2:fe:ac:2f:cb:
+                    a5:32:58:d6:58:a1:48:02:57:b4:08:93:37:98:a4:
+                    6f:32:4d:34:b5:e2:8d:bd:1e:f3:8e:a5:64:66:c1:
+                    25:0e:5d:0f:ee:42:97:48:90:b6:30:5e:e0:e2:a7:
+                    6d:e0:49:e4:44:f3:c2:9c:99:ff:67:33:2b:7a:fc:
+                    40:2c:2c:82:50:d1:4e:eb:7f:70:af:6e:10:2e:9a:
+                    c8:da:82:87:30:f5:ba:5c:ee:c8:1f:ef:31:21:1e:
+                    3c:0b:75:57:bf:68:39:bf:84:e6:aa:4c:19:88:90:
+                    5d:c3:47:d0:c6:90:15:e1:b2:fa:71:38:28:f7:66:
+                    ab:ec:aa:5b:73:40:d3:22:e0:41:33:c2:19:16:a6:
+                    23:ac:dd:4a:51:55:a9:83:1f:a0:97:43:79:ec:3f:
+                    7a:75:98:fc:51:34:bd:56:67:0f:b0:ac:3c:e5:ac:
+                    56:06:4c:29:c7:6a:d0:d6:bb:56:2c:19:62:46:0b:
+                    8a:7a:c4:63:bb:62:30:49:44:99:f7:df:dd:88:d5:
+                    6a:89:d3:20:0b:ff:a2:41:95:1b:84:4d:a3:4a:93:
+                    fd:12:37:fc:7f:fa:7d:fe:15:f9:00:3f:2b:99:eb:
+                    f5:8b:b1:2f:84:23:8c:f5:d6:38:4d:91:2d:ec:8f:
+                    7f:5b:d3
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            Netscape Comment:
+                Puppet Ruby/OpenSSL Internal Certificate
+            X509v3 Key Usage: critical
+                Digital Signature, Key Encipherment
+            X509v3 Extended Key Usage: critical
+                TLS Web Server Authentication, TLS Web Client Authentication
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            X509v3 Subject Key Identifier:
+                1D:37:08:33:33:61:A3:14:7A:4B:C7:E6:8F:BF:AE:D8:DD:D3:55:A9
+            X509v3 Authority Key Identifier:
+                keyid:E5:E3:6C:D5:3D:69:83:5D:F4:14:65:A9:BB:87:4D:AE:71:6C:1B:B8
+
+    Signature Algorithm: sha256WithRSAEncryption
+         1f:6d:c9:98:81:8e:c4:b1:8c:08:4e:a0:3a:d7:b6:5e:9a:1b:
+         72:f2:30:c9:57:6e:bf:5a:47:0b:de:15:5f:c4:83:37:5f:73:
+         25:95:2e:43:b9:92:e7:23:cf:07:4a:07:18:e3:f6:18:f5:ea:
+         61:4c:b3:1f:ef:4a:26:06:b8:e4:42:23:c3:4b:e1:cf:dd:18:
+         d2:66:cb:c5:1b:2c:a8:dc:13:6a:48:e3:cd:69:79:9d:13:21:
+         19:72:c7:71:a2:0f:01:8a:c7:49:fa:d4:86:1d:4c:0c:79:55:
+         f7:2c:ab:00:0b:74:9b:4b:4d:8b:32:97:37:a2:fe:89:80:6f:
+         9b:0d:4d:42:4f:0a:20:9f:83:bb:76:46:94:34:35:48:50:06:
+         e1:36:fc:d7:75:d3:d4:14:96:ad:77:8f:eb:c5:39:dc:e9:c4:
+         2c:e9:22:22:f0:13:83:1d:4b:a4:ce:c9:b2:28:0d:4b:2b:73:
+         65:99:8e:b8:16:08:9c:34:06:91:ca:3e:a6:56:7d:23:f7:e9:
+         59:a8:e6:f6:4f:c2:03:6a:94:e5:77:0c:5c:21:c9:a7:56:de:
+         61:7e:8c:cf:8e:e0:0d:ba:e6:6d:e5:55:07:37:13:85:7b:e0:
+         82:10:9e:1c:d6:6e:13:aa:39:ea:df:49:02:02:8a:17:e1:f9:
+         db:b0:a9:57:69:f3:27:93:39:43:75:5d:f2:77:c0:13:81:ad:
+         3a:e7:a1:c5:dc:7a:88:6a:34:51:ed:30:05:aa:b0:7c:30:97:
+         44:11:b8:73:e5:91:82:31:da:a9:6d:11:50:9c:96:63:1b:07:
+         24:73:8f:e5:1e:25:de:39:69:11:8e:fc:65:a1:63:d6:ee:5e:
+         52:2e:ad:b9:fa:99:09:8f:fa:fb:f3:4c:b5:9a:8c:f1:4d:aa:
+         5b:1e:bb:00:70:71:f9:b4:ff:5f:c2:2c:dd:59:90:dc:f3:f7:
+         78:7b:b1:ec:53:3d:34:1c:94:65:2d:b1:29:4c:3b:24:13:f7:
+         08:8a:be:71:9f:82:76:cf:19:58:08:be:d1:25:76:24:4e:3c:
+         dc:33:84:42:c2:b5:ae:01:04:7d:98:fd:fe:fb:14:54:19:25:
+         13:0c:0f:4b:e7:9c:73:b9:60:2b:8e:63:ed:59:6a:2a:80:b3:
+         26:1d:ff:c9:62:7d:71:8e:8b:d0:47:52:b4:32:90:3d:34:1b:
+         af:1b:76:44:e9:9e:d9:36:06:98:60:e1:ca:4a:80:d3:de:b1:
+         8c:76:04:1b:a9:63:70:69:5d:93:81:f9:e2:43:00:f9:ca:84:
+         7d:77:27:04:6d:15:0d:6c:78:a4:e6:bc:da:e0:6b:f4:11:e8:
+         a4:28:ed:99:22:b5:0c:44
+master22:~ #
+```
+### 4.2 Comprobación
+
+Vamos a comprobar que las órdenes (manifiesto) del master, llega bien al cliente y éste las ejecuta.
+
+- Vamos a cliente1 y reiniciamos la máquina y/o el servicio Puppet.
+- Comprobar que los cambios configurados en Puppet se han realizado.
+- En caso contrario, ejecutar comando para comprobar errores:
+    - `puppet agent --test`
+    - `puppet agent --server master42.curso1617 --test`
+
+![](img/008.png)
+
+- Para ver el detalle de los errores, podemos reiniciar el servicio puppet en el cliente, y consultar el archivo de log del cliente: `tail /var/log/puppet/puppet.log`.
+- Puede ser que tengamos algún mensaje de error de configuración del fichero `/etc/puppet/manifests/site.pp del master`. En tal caso, ir a los ficheros del master y corregir los errores de sintáxis.
+
+### 4.3 Problemas y eliminar certificados.
+
+Si tenemos problemas con los certificados, y queremos eliminar los certificados actuales, podemos hacer lo siguiente:
+
+- `puppet cert revoke cli1alu42.curso1617`: Lo ejecutamos en el master para revocar certificado del cliente.
+- `puppet cert clean cli1alu42.curso1617`: Lo ejecutamos en el master para eliminar ficheros del certificado del cliente.
+- `puppet cert print --all`: Muestra todos los certificados del servidor. No debe verse el del cliente que queremos eliminar.
+ - `rm -rf /var/lib/puppet/ssl`: Lo ejecutamos en el cliente para eliminar los certificados del cliente.
+
+
+## 5. Segunda versión del fichero pp
+
+Ya hemos probado una configuración sencilla en PuppetMaster. Ahora vamos a pasar a configurar algo más complejo.
+
+    - Contenido para `/etc/puppet/manifests/classes/hostlinux2.pp`:
+
+Tenemos que modificar el fichero nombrado anteriormente `hostlinux2.pp`.
+
+```console
+
+master22:~ # nano /etc/puppet/manifests/classes/hostlinux1.pp
+master22:~ # cat /etc/puppet/manifests/classes/hostlinux1.pp
+class hostlinux2 {
+  package { "tree": ensure => installed }
+  package { "traceroute": ensure => installed }
+  package { "geany": ensure => installed }
+
+  group { "piratas": ensure => "present", }
+  group { "admin": ensure => "present", }
+
+  user { 'barbaroja':
+    home => '/home/barbaroja',
+    shell => '/bin/bash',
+    password => 'saqueo',
+    groups => ['piratas','admin','root']
+  }
+
+  file { "/home/barbaroja":
+    ensure => "directory",
+    owner => "barbaroja",
+    group => "piratas",
+    mode => 750
+  }
+
+  file { "/home/barbaroja/share":
+    ensure => "directory",
+    owner => "barbaroja",
+    group => "piratas",
+    mode => 750
+  }
+
+  file { "/home/barbaroja/share/private":
+    ensure => "directory",
+    owner => "barbaroja",
+    group => "piratas",
+    mode => 700
+  }
+
+  file { "/home/barbaroja/share/public":
+    ensure => "directory",
+    owner => "barbaroja",
+    group => "piratas",
+    mode => 755
+  }
+}
+master22:~ #
+```
+
+```
+Las órdenes anteriores de configuración de recursos puppet, tienen el significado siguiente:
+
+        - `package`: indica paquetes que queremos que estén o no en el sistema.
+        - `group`: creación o eliminación de grupos.
+        - `user`: Creación o eliminación de usuarios.
+        - `file`: directorios o ficheros para crear o descargar desde servidor.
+        - `exec`: Para ejecutar comandos/scripts.
+```
+
+- Modificar `/etc/puppet/manifests/site.pp` para que se use la configuración de hostlinux2 el lugar de la anterior:
+
+![](img/009.png)
