@@ -1176,9 +1176,28 @@ master22:~ #
 - Con los comandos siguientes podremos hacernos una idea de como terminar de configurar el fichero puppet del master para la máquina Windows.
 
 - Iniciar consola puppet como administrador y probar los comandos:
-    - puppet agent --configprint server, debe mostrar el nombre del servidor puppet. En nuestro ejemplo debe ser masterXX.curso1627.
-    - puppet agent --server masterXX.curso1617 --test: Comprobar el estado del agente puppet.
+    - `puppet agent --configprint server`, debe mostrar el nombre del servidor puppet. En nuestro ejemplo debe ser master22.curso1718.
+
+![](img/022.png)
+
+    - puppet agent --server master22.curso1617 --test: Comprobar el estado del agente puppet.
+
+
     - puppet agent -t --debug --verbose: Comprobar el estado del agente puppet.
+
+
     - facter: Para consultar datos de la máquina windows, como por ejemplo la versión de puppet del cliente.
+
+![](img/023.png)
+
     - puppet resource user nombre-alumno1: Para ver la configuración puppet del usuario.
+
+
+![](img/024.png)
+
     - puppet resource file c:\Users: Para var la configuración puppet de la carpeta.
+
+![](img/025.png)
+![](img/026.png)
+![](img/027.png)
+![](img/028.png)
