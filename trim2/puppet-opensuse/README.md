@@ -909,6 +909,46 @@ class hostlinux2 {
 master22:~ #
 ```
 
+### Solución al problema de las contraseña que deben estar encriptada.
+
+- Instalamos el siguiente comando `zypper install whois`
+
+```console
+
+roberto@master22:~> sudo zypper install whois
+root's password:
+Cargando datos del repositorio...
+Leyendo los paquetes instalados...
+Resolviendo dependencias de paquete...
+
+El siguiente paquete NUEVO va a ser instalado:
+  whois
+
+1 nuevo paquete a instalar.
+Tamaño total de descarga: 83,0 KiB. Ya en caché: 0 B. Después de la operación,
+se utilizarán 249,0 KiB adicionales.
+¿Desea continuar? [s/n/? mostrar todas las opciones] (s): s
+Recuperando paquete whois-5.2.12-7.1.x86_64
+                                     (1/1),  83,0 KiB (249,0 KiB desempaquetado)
+Recuperando: whois-5.2.12-7.1.x86_64.rpm ............................[terminado]
+Buscando conflictos de archivos: ....................................[terminado]
+(1/1) Instalando: whois-5.2.12-7.1.x86_64 ...........................[terminado]
+```
+
+- Tiene un comando llamado `mkpasswd`para crear contraseñas encriptadas para el formato `sha-512`
+
+```console
+roberto@master22:~> mkpasswd -m sha-512
+Contraseña:
+$6$i7Ho47GKvI$bOkyu.tHppbvEPVJSJSglJfV1gqoOoiI69RKxRXznONWoKtcSsuZmeb4T.s8cnamhw1CZAaDTxUTMq8H.BUdq.
+roberto@master22:~>
+```
+
+- Tenemos que copiar la contraseña y pegarla en la contraseña de `barbaroja` del fichero `/etc/puppet/manifests/classes/hostlinux1.pp`
+
+![](img/010.png)
+
+
 ```
 Las órdenes anteriores de configuración de recursos puppet, tienen el significado siguiente:
 
@@ -922,3 +962,223 @@ Las órdenes anteriores de configuración de recursos puppet, tienen el signific
 - Modificar `/etc/puppet/manifests/site.pp` para que se use la configuración de hostlinux2 el lugar de la anterior:
 
 ![](img/009.png)
+
+- Realizamos un `tree /etc/puppet`
+
+```console
+roberto@master22:~> tree /etc/puppet
+/etc/puppet
+├── auth.conf
+├── files
+│   └── readme.txt
+├── fileserver.conf
+├── manifests
+│   ├── classes
+│   │   └── hostlinux1.pp
+│   └── site.pp
+├── puppet.conf
+└── tagmail.conf
+
+3 directories, 7 files
+roberto@master22:~>
+```
+
+- Reiniciamos el equipo `cli1alu22` y comprobamos que podemos conectarnos con el usuario `barbaroja`
+
+![](img/011.png)
+
+## 6. Cliente puppet Windows
+
+- Vamos a configurar Puppet para atender también a clientes Windows.
+
+    - Enlace de interés:
+
+        - http://docs.puppetlabs.com/windows/writing.html
+
+### 6.1 Modificaciones en el Master
+
+- Vamos a la MV master.
+- Vamos a crear una configuración puppet para las máquinas windows, dentro del fichero.
+- Crear `/etc/puppet/manifests/classes/hostwindows3.pp`, con el siguiente contenido:
+
+![](img/012.png)
+
+- Ahora vamos a modificar el fichero `site.pp` del master, para que tenga en cuenta la configuración de clientes GNU/Linux y clientes Windows, de modo diferenciado:
+
+![](img/013.png)
+
+
+```
+- NOMBRES DE MÁQUINA
+
+    - El master GNU/Linux del ejemplo se llama master42.curso1718
+    - El cliente1 GNU/Linux del ejemplo se llama cli1alu42.curso1718
+    - El cliente2 Windows del ejemplo se llama cli2alu42
+```
+
+- En el servidor ejecutamos `tree /etc/puppet`, para confirmar que tenemos los nuevos archivos.
+
+![](img/014.png)
+
+- Reiniciamos el servicio PuppetMaster.
+
+![](img/015.png)
+
+- Debemos instalar la misma versión de puppet en master y en el cliente Windows 7
+
+- Ejecutamos el comando facter, para ver la versión de Puppet que está usando el master.
+
+- El fichero puppet.conf en Windows está en `C:\ProgramData\PuppetLabs\puppet\etc\puppet.conf.` (ProgramData es una ruta oculta). Revisar que tenga algo como:
+
+```
+    [main]
+    server=master22.curso1718 # Definir el host master
+    pluginsync=false          # Desactivar los plugin
+```
+
+![](img/020.png)
+
+### 6.2 Modificaciones en el cliente2
+
+- Ahora vamos a instalar AgentePuppet en Windows. Recordar que debemos instalar la misma versión en ambos equipos (`puppet -V`).
+
+![](img/017.png)
+
+![](img/018.png)
+
+![](img/019.png)
+
+- Ya tenemos instalado el `Puppet` en windows.
+
+    Enlaces de interés:
+
+        http://docs.puppetlabs.com/windows?/installing.html
+        https://downloads.puppetlabs.com/windows/
+
+- Descargamos e instalamos la versión de Agente Puppet para Windows similar al Puppet Master.
+
+![](img/016.png)
+
+- Reiniciamos la MV.
+
+- Debemos aceptar el certificado en el master para este nuevo cliente. Consultar apartado anterior y repetir los pasos para este nuevo cliente.
+
+- Vamos al servidor `master22` y escribimos el siguiente comando para aceptar el certificado.
+
+```console
+master22:~ # puppet cert list
+  "cli2alu22" (SHA256) F8:ED:1B:0B:4B:D5:93:1D:9D:2E:E1:A9:2B:13:FF:85:F2:E6:56:A2:35:EA:49:ED:30:27:9B:F1:B8:FE:D8:C8
+master22:~ # puppet cert sign "cli2alu22"
+Notice: Signed certificate request for cli2alu22
+Notice: Removing file Puppet::SSL::CertificateRequest cli2alu22 at '/var/lib/puppet/ssl/ca/requests/cli2alu22.pem'
+master22:~ # puppet cert list
+master22:~ # puppet cert print cli2alu22
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 4 (0x4)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN=Puppet CA: master22.curso1718
+        Validity
+            Not Before: Jan 16 12:33:44 2018 GMT
+            Not After : Jan 16 12:33:44 2023 GMT
+        Subject: CN=cli2alu22
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (4096 bit)
+                Modulus:
+                    00:bb:a9:e0:8e:60:33:ef:09:b4:7d:dd:c5:6b:16:
+                    ff:00:71:fe:57:3f:6d:ce:67:d9:7a:89:50:af:99:
+                    ec:a0:ec:f6:c7:19:ac:6c:2b:0a:d2:3a:4a:9b:58:
+                    73:86:9a:6e:bd:c1:14:2e:16:e0:b0:b1:4c:9b:17:
+                    68:83:d6:46:f9:75:c7:fd:ff:4c:39:c9:06:cb:a9:
+                    8f:74:93:95:56:01:c0:70:de:0a:f7:05:ae:69:a9:
+                    78:28:f0:38:2b:33:ed:b5:29:26:79:e0:4a:16:06:
+                    f1:e2:51:6d:3a:1f:0a:6b:cb:c2:a5:dd:f9:b7:65:
+                    05:65:23:32:ff:37:8a:ef:e6:e0:08:33:2a:b0:b4:
+                    7e:8d:e5:61:fa:0c:fe:af:73:65:08:22:8d:9e:67:
+                    bf:6a:34:45:e8:71:e8:b2:29:6a:bb:ef:92:8f:78:
+                    c3:96:a7:fe:8b:b0:d2:cc:59:0e:68:ad:94:ef:16:
+                    71:07:6c:fc:31:c7:38:95:5f:c7:46:6b:a9:c9:66:
+                    47:09:99:5d:17:c8:67:b1:42:d0:94:63:80:a0:46:
+                    f4:91:7d:3c:75:6f:0d:c4:2c:fd:3a:00:bd:ef:24:
+                    8d:3d:0e:8d:d8:7f:48:fb:5e:b6:c0:32:9b:c2:8d:
+                    5e:58:de:7b:2a:67:20:71:4b:71:c2:87:c7:9a:a6:
+                    b6:01:54:7f:07:49:57:91:e1:c1:32:ad:76:51:7c:
+                    33:cc:b3:87:d2:fa:04:5a:d1:fd:ef:7e:6b:81:33:
+                    2f:ef:da:d0:78:58:60:fe:24:d5:fd:9b:08:29:89:
+                    1a:d4:f1:d9:07:c0:e5:d7:ca:8f:45:8e:f4:c9:28:
+                    9d:fc:18:de:60:b7:07:d5:49:08:45:1c:8b:f3:22:
+                    3c:4c:20:55:08:d5:c0:73:d5:da:23:ae:cd:9d:8a:
+                    97:e1:c7:7f:f1:b4:f9:1e:45:2b:c6:29:e1:6a:ee:
+                    ef:48:27:cb:ad:ae:d4:07:6c:da:e8:7f:44:18:4d:
+                    cb:94:f4:8c:da:05:ec:23:bc:b3:3a:23:5f:93:30:
+                    b5:55:fe:24:92:40:c8:ef:70:7f:f4:1c:ac:10:87:
+                    59:d0:7f:20:3d:ba:1c:65:7c:46:92:4f:37:b8:48:
+                    38:b1:3a:a7:5f:8d:83:65:8c:42:9e:57:6c:80:d1:
+                    e6:1f:dc:7f:53:63:99:e0:d6:24:cd:a8:4e:45:71:
+                    6a:93:94:83:e6:bf:b5:81:a9:6a:89:1a:5d:25:51:
+                    37:dd:aa:83:f4:96:c9:8f:62:e8:12:f9:f2:f7:89:
+                    72:2b:20:c7:55:8c:ea:a2:77:10:71:a6:16:00:d4:
+                    c1:ec:02:ea:37:3b:87:70:d8:df:43:b0:e5:ba:75:
+                    93:ba:fd
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            Netscape Comment:
+                Puppet Ruby/OpenSSL Internal Certificate
+            X509v3 Key Usage: critical
+                Digital Signature, Key Encipherment
+            X509v3 Extended Key Usage: critical
+                TLS Web Server Authentication, TLS Web Client Authentication
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            X509v3 Subject Key Identifier:
+                DD:87:A3:85:16:5D:50:3F:9F:CE:B4:F1:DD:26:DC:0B:99:1A:3C:26
+            X509v3 Authority Key Identifier:
+                keyid:E5:E3:6C:D5:3D:69:83:5D:F4:14:65:A9:BB:87:4D:AE:71:6C:1B:B8
+
+    Signature Algorithm: sha256WithRSAEncryption
+         14:3f:de:62:2c:27:b8:b5:04:b1:5a:73:8d:a4:86:55:f2:e3:
+         97:86:0d:14:8f:96:45:14:d7:ac:86:b6:07:04:5d:3a:7f:51:
+         ae:21:42:50:e6:53:c1:e9:0f:23:2f:7f:0b:f2:b9:55:54:85:
+         b1:87:6e:d7:07:81:30:e4:69:59:8c:c5:0a:67:ba:fa:96:88:
+         df:af:5f:32:f1:37:54:b8:86:cb:74:bb:65:59:a1:cb:2b:6e:
+         2a:6b:aa:9e:d1:bb:2d:50:99:86:86:a6:11:ce:53:c7:f0:0b:
+         07:78:71:64:cc:cf:b1:66:f8:5c:7b:01:5e:14:8c:6e:9b:c0:
+         35:af:b2:82:9a:54:55:81:35:c5:0b:14:1b:0c:4c:6c:16:e4:
+         a0:7d:79:65:63:f1:92:e3:90:5f:16:31:c1:f1:5d:2d:b5:2d:
+         05:67:cf:bd:99:9c:c2:72:5f:91:ef:78:25:43:83:38:7c:c4:
+         5d:ac:1c:dc:e9:9d:6d:e2:8e:2e:13:4e:7a:2b:18:23:97:ca:
+         ed:59:af:d8:7c:c6:4e:b9:85:15:fe:a2:6b:8c:02:a9:36:61:
+         dc:ab:6f:0c:b0:14:01:eb:75:8c:f1:d7:3f:47:8e:a2:94:67:
+         b8:3d:c8:71:ac:4a:54:7b:bc:ee:e0:66:3b:20:33:a4:25:0b:
+         54:88:3d:02:db:6a:87:87:8f:52:f0:d9:3b:8b:23:99:38:04:
+         57:c9:84:18:7a:22:e4:9e:08:01:64:5d:f8:b0:ad:71:51:9d:
+         63:fa:ae:b6:86:8d:51:21:ac:29:17:7b:96:87:8a:71:97:28:
+         3f:4f:07:e5:88:6d:5d:dd:82:15:bf:c4:ab:07:c5:df:77:28:
+         e0:94:16:8e:ae:51:6b:83:17:4b:00:70:11:63:43:e3:c9:41:
+         fc:c2:50:33:6c:f9:b6:11:72:6c:e4:ae:9e:5a:11:2a:5d:12:
+         46:cb:fb:26:22:65:2f:4c:f3:8e:01:a3:e4:83:d8:7e:ed:9c:
+         0a:3d:fe:7a:85:28:ab:58:3e:8c:e9:dc:4c:b0:fe:3d:ef:03:
+         aa:a5:00:7d:33:00:37:27:ee:4c:28:06:b1:f8:4d:fd:2b:e4:
+         24:39:9c:61:3c:ca:48:2a:73:39:96:16:53:0d:08:3f:bf:a5:
+         dd:2d:1a:55:36:d3:c1:94:29:8c:2c:2e:0b:13:63:b5:73:1e:
+         df:9c:c6:9c:ec:b5:03:a6:3e:ea:82:0c:6e:1e:39:b7:bb:4b:
+         bc:95:6d:87:5b:5b:dd:45:80:ef:3b:39:9e:57:4a:ad:38:65:
+         c0:ee:a5:91:95:18:c9:27:c2:4f:ab:0d:e8:fa:80:dc:62:38:
+         05:43:30:5b:17:6f:38:6a
+master22:~ #
+```
+
+
+- Vamos al cliente2.
+
+- Con los comandos siguientes podremos hacernos una idea de como terminar de configurar el fichero puppet del master para la máquina Windows.
+
+- Iniciar consola puppet como administrador y probar los comandos:
+    - puppet agent --configprint server, debe mostrar el nombre del servidor puppet. En nuestro ejemplo debe ser masterXX.curso1627.
+    - puppet agent --server masterXX.curso1617 --test: Comprobar el estado del agente puppet.
+    - puppet agent -t --debug --verbose: Comprobar el estado del agente puppet.
+    - facter: Para consultar datos de la máquina windows, como por ejemplo la versión de puppet del cliente.
+    - puppet resource user nombre-alumno1: Para ver la configuración puppet del usuario.
+    - puppet resource file c:\Users: Para var la configuración puppet de la carpeta.
