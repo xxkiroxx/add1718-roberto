@@ -1248,3 +1248,19 @@ master22:~ #
 - Comprobamos que el fichero creado para suso está en su ruta.
 
 ![](img/040.png)
+
+## 7. Fichero readme.txt
+
+Los ficheros que se guardan en `/etc/puppet/files` se pueden descargar desde el resto de máquinas cliente puppet.
+
+- Contenido para readme.txt: "¡Al abordaje!".
+
+    - Ejemplo de configuración puppet para descargar fichero:
+
+```
+    file {  '/opt/readme.txt' :
+        source => 'puppet:///files/readme.txt',
+    }
+```
+
+![](img/041.png)
