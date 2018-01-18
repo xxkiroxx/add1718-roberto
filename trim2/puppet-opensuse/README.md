@@ -710,6 +710,7 @@ roberto@cli1alu22:~>
 roberto@cli1alu22:~> sudo systemctl start puppet
 ```
 
+
 ## 4. Certificados
 
 Tenemos que intercambiar los certificados entre ambas máquinas.
@@ -840,6 +841,11 @@ Vamos a comprobar que las órdenes (manifiesto) del master, llega bien al client
 
 - Para ver el detalle de los errores, podemos reiniciar el servicio puppet en el cliente, y consultar el archivo de log del cliente: `tail /var/log/puppet/puppet.log`.
 - Puede ser que tengamos algún mensaje de error de configuración del fichero `/etc/puppet/manifests/site.pp del master`. En tal caso, ir a los ficheros del master y corregir los errores de sintáxis.
+
+- Comprobamos que se instalaron los comandos de `tree, traceroute y geany`
+
+![](img/029.png)
+
 
 ### 4.3 Problemas y eliminar certificados.
 
@@ -1173,6 +1179,10 @@ master22:~ #
 
 - Vamos al cliente2.
 
+- Comprobamos que llega correctamente el fichero `warning.txt`
+
+![](img/030.png)
+
 - Con los comandos siguientes podremos hacernos una idea de como terminar de configurar el fichero puppet del master para la máquina Windows.
 
 - Iniciar consola puppet como administrador y probar los comandos:
@@ -1180,11 +1190,15 @@ master22:~ #
 
 ![](img/022.png)
 
-    - puppet agent --server master22.curso1617 --test: Comprobar el estado del agente puppet.
+    - puppet agent --server master22.curso1718 --test: Comprobar el estado del agente puppet.
 
+![](img/031.png)
 
     - puppet agent -t --debug --verbose: Comprobar el estado del agente puppet.
 
+![](img/033.png)
+
+![](img/032.png)
 
     - facter: Para consultar datos de la máquina windows, como por ejemplo la versión de puppet del cliente.
 
@@ -1198,6 +1212,39 @@ master22:~ #
     - puppet resource file c:\Users: Para var la configuración puppet de la carpeta.
 
 ![](img/025.png)
+
+- Configuramos en el master el fichero `/etc/puppet/manifests/classes/hostwindows4.pp` para el cliente Windows:
+
 ![](img/026.png)
+
+- Tenemos que ir al fichero `/etc/puppet/manifests/site.pp` y añadimos una línea nueva de include hostwindows5 para que cree los usuarios.
+
+![](img/035.png)
+
+- Reiniciamos el Servicio.
+
 ![](img/027.png)
+
+- Comprobamos en el equipo cliente que se crearon los usuarios.
+
+![](img/034.png)
+
+![](img/037.png)
+
+- Crear un nuevo fichero de configuración para la máquina cliente Windows con el nombre `/etc/puppet/manifests/classes/hostalumno5.pp`
+
 ![](img/028.png)
+
+- Tenemos que ir al fichero `/etc/puppet/manifests/site.pp` y añadimos una línea nueva de include hostalumno5 para que cree los usuarios.
+
+![](img/036.png)
+
+- Comprobamos que se creo el usuario `Pablo y suso` y dentro de suso una carpeta llamada `suso.txt`
+
+![](img/038.png)
+
+![](img/039.png)
+
+- Comprobamos que el fichero creado para suso está en su ruta.
+
+![](img/040.png)
