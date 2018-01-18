@@ -535,7 +535,7 @@ Los ficheros que se guardan en `/etc/puppet/files` se pueden descargar desde el 
 
     Contenido para readme.txt: "¡Al abordaje!".
 
-![](img/001.png)
+![](img/043.png)
 
 ### 2.3 site.pp
 
@@ -1264,3 +1264,5 @@ Los ficheros que se guardan en `/etc/puppet/files` se pueden descargar desde el 
 ```
 
 ![](img/041.png)
+
+![](img/042.png)
