@@ -299,7 +299,7 @@ Para programar una tarea periódica tenemos dos formas:
 ![](img/024.png)
 
 
-- Por defecto se usa el editor vim para modificar crontab. Si queremos usar el editor nano, hacemos export VISUAL'nano'.
+- Por defecto se usa el editor vim para modificar `crontab`. Si queremos usar el editor nano, hacemos `export VISUAL'nano'`.
 
 ![](img/025.png)
 
