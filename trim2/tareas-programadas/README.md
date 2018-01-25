@@ -103,8 +103,8 @@ Vamos a hacer una tarea diferida con GNU/Linux.
 
 El servicio atd es el responsable de la ejecución de los comandos at. Comprobar que esté en ejecución:
 
-- Yast -> Servicios
-- systemctl status atd
+- `Yast -> Servicios`
+- `systemctl status atd`
 
 Tenemos que iniciar el servicio de `atd`.
 
@@ -130,14 +130,14 @@ roberto@hernandez22g:~/Escritorio>
 
     Ejemplos de comandos:
 
-    - at, crea una tarea diferida.
-    - atq, muestra los trabajos en cola.
-    - at -c 1, muestra la configuración del trabajo ID=1.
-    - atrm 1, elimina el trabajo con ID=1.
+    - `at`, crea una tarea diferida.
+    - `atq`, muestra los trabajos en cola.
+    - `at -c 1`, muestra la configuración del trabajo ID=1.
+    - `atrm 1`, elimina el trabajo con ID=1.
 
 Otra forma de trabajar con at: at 11:45 Feb 28 < scriptname.sh
 
-- Si el usuario no tuviera permisos para ejecutar at, consultar los ficheros: /etc/at.deny y /etc/at.allow.
+- Si el usuario no tuviera permisos para ejecutar at, consultar los ficheros: `/etc/at.deny y /etc/at.allow`.
 
 - atq, consultamos que no hay ninguna tarea programada.
 
@@ -276,7 +276,7 @@ Comandos para utilizar en el ejercicio anterior
 
 ![](img/022.png)
 
-- atq, consultamos que ya NO hay tareas.
+- `atq`, consultamos que ya NO hay tareas.
 
 ![](img/023.png)
 
