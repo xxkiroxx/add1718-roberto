@@ -264,14 +264,13 @@ zenity --info --text="¡Que la fuerza te acompañe!"
 
 roberto@hernandez22g:~>
 ```
-```
+
 Comandos para utilizar en el ejercicio anterior
 
 - Usar comando at para programar una tarea diferida. Por ejemplo para mostrar un mensaje en pantalla.
-- atq, consultamos que SI hay una tarea programada.
-- at -c 1, muestra la configuración del trabajo ID=1.
+- `atq`, consultamos que SI hay una tarea programada.
+- `at -c 1`, muestra la configuración del trabajo ID=1.
 
-```
 - Capturar imagen cuando se ejecute la tarea.
 
 ![](img/022.png)
