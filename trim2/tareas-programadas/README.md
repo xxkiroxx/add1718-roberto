@@ -1,11 +1,10 @@
 # Tareas programadas
 
-![](img/000.png)
+![](img/000.jpg)
 
 ## 1. Windows
 
 Vamos hacer una tarea programada y otra diferida con `Windows 7`
-
 ### 1.1 Tarea diferida
 
 La tarea diferida se define para ejecutarse una sola vez en una fecha futura.
@@ -325,9 +324,14 @@ Para programar una tarea periódica tenemos dos formas:
         date >> /home/usuario/cron.log
 ```
 
-Para definir una tarea ASINCRONA ponemos el script de ejecución en alguno de los directorios siguientes:
+- Comprobamos que se crea el fichero `con.log`
 
-- `/etc/cron.hourly`, cada hora
-- `/etc/cron.daily`, diariamente
-- `/etc/cron.weekly`, semanalmente
-- `/etc/cron.monthly`, mensualmente
+![](img/028.png)
+
+Para crear el script de apagado con el comando `shutdown` tenemos que darle permiso de privilegios al usuario `roberto` en el fichero de `sudoers` en al ruta `/etc/sudoers`
+
+![](img/029.png)
+
+Escribimos un nuevo script con el comando `shutdown`.
+
+![](img/030.png)
