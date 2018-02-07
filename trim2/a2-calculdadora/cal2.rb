@@ -25,17 +25,17 @@ else
     if operador == "+"
       suma = num1 + num2
       puts "#{num1} + #{num2} = #{suma}"
-      elsif operador == "-"
-        resta = num1 - num2
-        puts "#{num1} - #{num2} = #{resta}"
-      elsif operador == "x"
-        multi = num1 * num2
-        puts "#{num1} x #{num2} = #{multi}"
-      elsif operador == "/"
-        division = num1 / num2
-        puts "#{num1} / #{num2} = #{division}"
+    elsif operador == "-"
+      resta = num1 - num2
+      puts "#{num1} - #{num2} = #{resta}"
+    elsif operador == "x"
+      multi = num1 * num2
+      puts "#{num1} x #{num2} = #{multi}"
+    elsif operador == "/"
+      division = num1 / num2
+      puts "#{num1} / #{num2} = #{division}"
     else
         puts "Error"
     end
-end
+  end
 end
