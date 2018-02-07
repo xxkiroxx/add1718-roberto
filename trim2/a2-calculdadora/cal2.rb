@@ -18,10 +18,10 @@ else
   separar_lineas=contenido.split("\n")
 
   separar_lineas.each do |separar_linea|
-    elementos=separar_linea.split()
-    num1=elementos[0].to_i
-    operador=elementos[1]
-    num2=elementos[2].to_i
+    campo_num_op=separar_linea.split()
+    num1=campo_num_op[0].to_i
+    operador=campo_num_op[1]
+    num2=campo_num_op[2].to_i
     if operador == "+"
       suma = num1 + num2
       puts "#{num1} + #{num2} = #{suma}"
