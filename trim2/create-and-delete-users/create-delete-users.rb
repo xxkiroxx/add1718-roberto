@@ -18,17 +18,24 @@ if ARGV.size !=1
 else
   lista_usuarios    = ARGV[0]
   contenido         = `cat #{lista_usuarios}`
-  separar_linea  = contenido.split("\n")
+  separar_linea     = contenido.split("\n")
   separar_linea.each do |usuario|
     separar_usuario = usuario.split(":")
     id_usuario = system("id #{separar_usuario[0]} &> /dev/null")
+
+    if separar_usuario[2] == ""
+      puts "El usuario #{separar_usuario[0]} No tiene correo"
+      next
+    end
+
     if separar_usuario[4] == "add"
       if  id_usuario == true
         puts "El usuario #{separar_usuario[0]} ya existe"
       else
-        system("useradd -m #{separar_usuario[0]} &> /dev/null")
-        puts "El usuario #{separar_usuario[0]} fue creado correctamente"
+          system("useradd -m #{separar_usuario[0]} &> /dev/null")
+          puts "El usuario #{separar_usuario[0]} fue creado correctamente"
       end
+
     elsif separar_usuario[4] == "del"
       if  id_usuario == true
         system("userdel -fr #{separar_usuario[0]} &> /dev/null")
