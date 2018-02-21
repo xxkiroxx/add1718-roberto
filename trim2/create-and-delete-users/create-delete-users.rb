@@ -44,7 +44,7 @@ else
         puts "El usuario #{separar_usuario[0]} no existe"
       end
     else
-      puts "La opción no es correctamente"
+      puts "La opción no es correcta"
     end
   end
 end
